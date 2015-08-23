@@ -8,6 +8,7 @@
 
 #import "ChatCellTableViewCell.h"
 #import "Tools.h"
+#import "PersionInfoModel.h"
 
 @implementation ChatCellTableViewCell
 
@@ -47,7 +48,8 @@
     _messageLabel.text   = model.message;
     [self setCellHeigh:model.cellHeigt];
     if (model.isme) {
-        _senderImgView.image = [UIImage imageNamed:@"3"];
+        PersionInfoModel *model = [PersionInfoModel loadDatasFromLocal];
+        _senderImgView.image = [UIImage imageWithData:model.photo];
     }else{
         _senderImgView.image = [UIImage imageNamed:@"4"];
     }

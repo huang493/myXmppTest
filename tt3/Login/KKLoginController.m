@@ -11,6 +11,7 @@
 #import "DataBaseManager.h"
 #import "MBProgressHUD.h"
 #import "XMPPFramework.h"
+#import "ResgistViewController.h"
 
 @interface KKLoginController () <UITextFieldDelegate>
 {
@@ -37,11 +38,20 @@
 }
 
 -(void)initNav{
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    rightBtn.frame = CGRectMake(0, 0, 40, 30);
-    [rightBtn setTitle:@"Login" forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(loginActopn:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    loginBtn.frame = CGRectMake(0, 0, 60, 30);
+    [loginBtn setTitle:@"Login" forState:UIControlStateNormal];
+    [loginBtn addTarget:self action:@selector(loginActopn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UIButton *resgistBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    resgistBtn.frame = CGRectMake(0, 0, 60, 30);
+    [resgistBtn setTitle:@"Resgist" forState:UIControlStateNormal];
+    [resgistBtn addTarget:self action:@selector(resgistActopn:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItems = @[
+                                                [[UIBarButtonItem alloc] initWithCustomView:loginBtn],
+                                                [[UIBarButtonItem alloc] initWithCustomView:resgistBtn]
+                                                ];
     
 }
 
@@ -88,37 +98,22 @@
 
 -(void)receivesNotAuthenticateResult:(NSNotification *)no{
     
-    hub.mode = MBProgressHUDModeText;
-    NSXMLElement *err = (NSXMLElement *)no.userInfo;
+    [self.hud hide:YES];
+    NSXMLElement *err = (NSXMLElement *)no.object;
     if (err) {
-        hub.labelText = [NSString stringWithFormat:@"%@",err];
-        hub.detailsLabelText = @"please try again.";
+        [self showHudOnKeyWindowTitle:@"please try again!" subTitle:nil ActivityAlarm:NO after:1.5];
+        //移除失败的用户信息
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults removeObjectForKey:@"userid"];
+        [defaults removeObjectForKey:@"password"];
+        [defaults removeObjectForKey:@"server"];
+        [defaults synchronize];
     }
     else{
-        hub.labelText = @"login success!";
-        hub.detailsLabelText = @"";
+        [self showHudOnKeyWindowTitle:@"login success!" subTitle:nil ActivityAlarm:NO after:1.5];
         [self loginSuccessAction];
+        [NSTimer scheduledTimerWithTimeInterval:1.5 target:self.navigationController selector:@selector(popViewControllerAnimated:) userInfo:nil repeats:NO];
     }
-    
-    __weak KKLoginController *weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 2), dispatch_get_main_queue(), ^{
-        hub.hidden = YES;
-        
-        //服务器登入成功
-        if ([hub.detailsLabelText isEqualToString:@""]) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-        }
-        else{
-        //服务器登入失败
-            //移除失败的用户信息
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults removeObjectForKey:@"userid"];
-            [defaults removeObjectForKey:@"password"];
-            [defaults removeObjectForKey:@"server"];
-            [defaults synchronize];
-        }
-    });
-    
 }
 
 -(void)loginSuccessAction{
@@ -127,7 +122,7 @@
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     path = [NSString stringWithFormat:@"%@/%@",path,accountTextField.text];
     BOOL result = [fileManger createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
-    NSLog(@"------------>>>create file path:%@",path);
+    NSLog(@"------------>>>create file path:\n%@",path);
     
     
     //创建数据库
@@ -175,6 +170,12 @@
     [defaults synchronize];
     
     
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    [appdele setupVCard];
+    XMPPStream  *stream = appdele.xmppStream;
+    XMPPvCardTempModule *vCardTempModule = appdele.vCardTempModule;
+    [vCardTempModule fetchvCardTempForJID:stream.myJID ignoreStorage:YES];
+    
     if (_newAccount) {
         _newAccount(accountTextField.text,passwordTextField.text,serverTextField.text);
     }
@@ -204,14 +205,8 @@
     if (![accountTextField.text isEqualToString:[defaults objectForKey:@"userid"]]) {
         if (accountTextField.text && passwordTextField.text && serverTextField.text) {
             
-            if (hub == nil) {
-                hub = [MBProgressHUD  showHUDAddedTo:self.view animated:YES];
-            }
-            hub.mode = MBProgressHUDModeIndeterminate;
-            hub.labelText = @"loging...";
-            hub.detailsLabelText = @"please waiting...";
-            
-            
+            [self showHudOnKeyWindowTitle:@"loging..." subTitle:@"please waiting..." ActivityAlarm:YES];
+
             [defaults setObject:accountTextField.text forKey:@"userid"];
             [defaults setObject:passwordTextField.text forKey:@"password"];
             [defaults setObject:serverTextField.text forKey:@"server"];
@@ -224,6 +219,11 @@
     
     [defaults synchronize];
 
+}
+
+-(void)resgistActopn:(UIButton *)seder{
+    ResgistViewController* resgistVC = [[ResgistViewController alloc] init];
+    [self.navigationController pushViewController:resgistVC animated:YES];
 }
 
 

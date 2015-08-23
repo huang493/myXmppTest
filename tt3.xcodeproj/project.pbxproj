@@ -60,6 +60,10 @@
 		1866AE0A1B5898ED005BAD80 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1866AE091B5898ED005BAD80 /* libresolv.dylib */; };
 		1866AE0C1B5898F4005BAD80 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1866AE0B1B5898F4005BAD80 /* libxml2.2.dylib */; };
 		1869258D1B60846600AFA564 /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869258C1B60846600AFA564 /* Tools.m */; };
+		18822D461B85BC480009DBD7 /* backGround.png in Resources */ = {isa = PBXBuildFile; fileRef = 18822D451B85BC480009DBD7 /* backGround.png */; };
+		18822D511B85D04E0009DBD7 /* PersionInfoCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18822D4F1B85D04E0009DBD7 /* PersionInfoCellTableViewCell.m */; };
+		18822D521B85D04E0009DBD7 /* PersionInfoCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18822D501B85D04E0009DBD7 /* PersionInfoCellTableViewCell.xib */; };
+		188436F51B846280006C1E78 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188436F41B846280006C1E78 /* BaseViewController.m */; };
 		188B794E1B5E1E28009742FD /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 188B79431B5E1E28009742FD /* FMDatabase.m */; };
 		188B794F1B5E1E28009742FD /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 188B79451B5E1E28009742FD /* FMDatabaseAdditions.m */; };
 		188B79501B5E1E28009742FD /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 188B79471B5E1E28009742FD /* FMDatabasePool.m */; };
@@ -205,6 +209,9 @@
 		18DF24A71B71AD5C002FA886 /* EmotionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF24A21B71AD5C002FA886 /* EmotionView.m */; };
 		18DF24A81B71AD5C002FA886 /* SectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF24A41B71AD5C002FA886 /* SectionView.m */; };
 		18DF24A91B71AD5C002FA886 /* sendMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF24A61B71AD5C002FA886 /* sendMessageView.m */; };
+		18E29B5F1B85A68800474EF9 /* PersionInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E29B5E1B85A68800474EF9 /* PersionInfoModel.m */; };
+		756246421B8812C5001104B8 /* ResgistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 756246401B8812C5001104B8 /* ResgistViewController.m */; };
+		756246431B8812C5001104B8 /* ResgistViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 756246411B8812C5001104B8 /* ResgistViewController.xib */; };
 		75E97D501B5A308A0023B61B /* XMPPBandwidthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E97C521B5A308A0023B61B /* XMPPBandwidthMonitor.m */; };
 		75E97D511B5A308A0023B61B /* XMPPCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E97C551B5A308A0023B61B /* XMPPCoreDataStorage.m */; };
 		75E97D521B5A308A0023B61B /* XMPPFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E97C591B5A308A0023B61B /* XMPPFileTransfer.m */; };
@@ -423,6 +430,12 @@
 		1866AE0B1B5898F4005BAD80 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		1869258B1B60846600AFA564 /* Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
 		1869258C1B60846600AFA564 /* Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tools.m; sourceTree = "<group>"; };
+		18822D451B85BC480009DBD7 /* backGround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backGround.png; sourceTree = "<group>"; };
+		18822D4E1B85D04E0009DBD7 /* PersionInfoCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersionInfoCellTableViewCell.h; sourceTree = "<group>"; };
+		18822D4F1B85D04E0009DBD7 /* PersionInfoCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersionInfoCellTableViewCell.m; sourceTree = "<group>"; };
+		18822D501B85D04E0009DBD7 /* PersionInfoCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersionInfoCellTableViewCell.xib; sourceTree = "<group>"; };
+		188436F31B846280006C1E78 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		188436F41B846280006C1E78 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		188B79421B5E1E28009742FD /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		188B79431B5E1E28009742FD /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		188B79441B5E1E28009742FD /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -597,6 +610,11 @@
 		18DF24A41B71AD5C002FA886 /* SectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionView.m; sourceTree = "<group>"; };
 		18DF24A51B71AD5C002FA886 /* sendMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sendMessageView.h; sourceTree = "<group>"; };
 		18DF24A61B71AD5C002FA886 /* sendMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sendMessageView.m; sourceTree = "<group>"; };
+		18E29B5D1B85A68800474EF9 /* PersionInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersionInfoModel.h; sourceTree = "<group>"; };
+		18E29B5E1B85A68800474EF9 /* PersionInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersionInfoModel.m; sourceTree = "<group>"; };
+		7562463F1B8812C5001104B8 /* ResgistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResgistViewController.h; sourceTree = "<group>"; };
+		756246401B8812C5001104B8 /* ResgistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResgistViewController.m; sourceTree = "<group>"; };
+		756246411B8812C5001104B8 /* ResgistViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResgistViewController.xib; sourceTree = "<group>"; };
 		75E97C511B5A308A0023B61B /* XMPPBandwidthMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBandwidthMonitor.h; sourceTree = "<group>"; };
 		75E97C521B5A308A0023B61B /* XMPPBandwidthMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPBandwidthMonitor.m; sourceTree = "<group>"; };
 		75E97C541B5A308A0023B61B /* XMPPCoreDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPCoreDataStorage.h; sourceTree = "<group>"; };
@@ -833,6 +851,11 @@
 				1860B7501B81CEE6007FBFF0 /* PersionInfoViewController.h */,
 				1860B7511B81CEE6007FBFF0 /* PersionInfoViewController.m */,
 				1860B7521B81CEE6007FBFF0 /* PersionInfoViewController.xib */,
+				18E29B5D1B85A68800474EF9 /* PersionInfoModel.h */,
+				18E29B5E1B85A68800474EF9 /* PersionInfoModel.m */,
+				18822D4E1B85D04E0009DBD7 /* PersionInfoCellTableViewCell.h */,
+				18822D4F1B85D04E0009DBD7 /* PersionInfoCellTableViewCell.m */,
+				18822D501B85D04E0009DBD7 /* PersionInfoCellTableViewCell.xib */,
 			);
 			path = PersionInfo;
 			sourceTree = "<group>";
@@ -1172,6 +1195,8 @@
 				188B79541B5E1EE8009742FD /* dataBaseManger */,
 				18A975DB1B57A0AF00C010C9 /* AppDelegate.h */,
 				18A975DC1B57A0AF00C010C9 /* AppDelegate.m */,
+				188436F31B846280006C1E78 /* BaseViewController.h */,
+				188436F41B846280006C1E78 /* BaseViewController.m */,
 				1869258B1B60846600AFA564 /* Tools.h */,
 				1869258C1B60846600AFA564 /* Tools.m */,
 				18A975E11B57A0AF00C010C9 /* Main.storyboard */,
@@ -1276,6 +1301,7 @@
 				18DF23AB1B71AD48002FA886 /* 2.png */,
 				18DF23AC1B71AD48002FA886 /* 3.png */,
 				18DF23AD1B71AD48002FA886 /* 4.png */,
+				18822D451B85BC480009DBD7 /* backGround.png */,
 				18DF23AE1B71AD48002FA886 /* emotion */,
 			);
 			path = images;
@@ -1445,6 +1471,9 @@
 			children = (
 				18DF24991B71AD4E002FA886 /* KKLoginController.h */,
 				18DF249A1B71AD4E002FA886 /* KKLoginController.m */,
+				7562463F1B8812C5001104B8 /* ResgistViewController.h */,
+				756246401B8812C5001104B8 /* ResgistViewController.m */,
+				756246411B8812C5001104B8 /* ResgistViewController.xib */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2142,6 +2171,7 @@
 				TargetAttributes = {
 					18A975D31B57A0AF00C010C9 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = PBYMSEKHGG;
 					};
 					18A975EC1B57A0AF00C010C9 = {
 						CreatedOnToolsVersion = 6.3;
@@ -2215,6 +2245,7 @@
 				18DF24391B71AD48002FA886 /* [@pic080]@2x.png in Resources */,
 				18DF245B1B71AD48002FA886 /* [@pic047]@2x.png in Resources */,
 				18DF243C1B71AD48002FA886 /* [@pic020]@2x.png in Resources */,
+				756246431B8812C5001104B8 /* ResgistViewController.xib in Resources */,
 				18DF246F1B71AD48002FA886 /* [@002]@2x.png in Resources */,
 				18DF24311B71AD48002FA886 /* [@pic072]@2x.png in Resources */,
 				18DF24381B71AD48002FA886 /* [@pic079]@2x.png in Resources */,
@@ -2238,6 +2269,7 @@
 				18DF24821B71AD48002FA886 /* [@021]@2x.png in Resources */,
 				18DF242B1B71AD48002FA886 /* [@pic066]@2x.png in Resources */,
 				18DF24301B71AD48002FA886 /* [@pic071]@2x.png in Resources */,
+				18822D521B85D04E0009DBD7 /* PersionInfoCellTableViewCell.xib in Resources */,
 				18DF24511B71AD48002FA886 /* [@pic041]@2x.png in Resources */,
 				18DF243B1B71AD48002FA886 /* [@pic019]@2x.png in Resources */,
 				18DF24351B71AD48002FA886 /* [@pic076]@2x.png in Resources */,
@@ -2247,6 +2279,7 @@
 				18DF243E1B71AD48002FA886 /* [@pic022]@2x.png in Resources */,
 				18DF24971B71AD48002FA886 /* [@042]@2x.png in Resources */,
 				18DF247B1B71AD48002FA886 /* [@014]@2x.png in Resources */,
+				18822D461B85BC480009DBD7 /* backGround.png in Resources */,
 				18A975E81B57A0AF00C010C9 /* LaunchScreen.xib in Resources */,
 				18DF24421B71AD48002FA886 /* [@pic026]@2x.png in Resources */,
 				1866ADED1B5897DA005BAD80 /* README.txt in Resources */,
@@ -2316,6 +2349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				188B79571B5E1F30009742FD /* DataBaseManager.m in Sources */,
+				18822D511B85D04E0009DBD7 /* PersionInfoCellTableViewCell.m in Sources */,
 				75E97D901B5A308A0023B61B /* NSString+XEP_0106.m in Sources */,
 				18DF24A81B71AD5C002FA886 /* SectionView.m in Sources */,
 				75E97DA41B5A308A0023B61B /* XMPPStreamManagement.m in Sources */,
@@ -2372,6 +2406,7 @@
 				75E97D841B5A308A0023B61B /* XMPPResultSet.m in Sources */,
 				1866ADDD1B5897DA005BAD80 /* DDList.m in Sources */,
 				75E97D971B5A308A0023B61B /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
+				756246421B8812C5001104B8 /* ResgistViewController.m in Sources */,
 				75E97D881B5A308A0023B61B /* XMPPIQ+XEP_0066.m in Sources */,
 				75E97D5E1B5A308A0023B61B /* XMPPRosterMemoryStorage.m in Sources */,
 				18B971361B5F7CE0006D26EE /* MBProgressHUD.m in Sources */,
@@ -2425,6 +2460,7 @@
 				75E97D741B5A308A0023B61B /* XMPPMUC.m in Sources */,
 				75E97D531B5A308A0023B61B /* XMPPIncomingFileTransfer.m in Sources */,
 				1866ADDC1B5897DA005BAD80 /* XMPPStream.m in Sources */,
+				18E29B5F1B85A68800474EF9 /* PersionInfoModel.m in Sources */,
 				75E97D761B5A308A0023B61B /* XMPPvCard.xcdatamodeld in Sources */,
 				75E97DA51B5A308A0023B61B /* XMPPAutoPing.m in Sources */,
 				75E97D9F1B5A308A0023B61B /* XMPPMessage+XEP_0184.m in Sources */,
@@ -2472,6 +2508,7 @@
 				1866ADD71B5897DA005BAD80 /* XMPPJID.m in Sources */,
 				18A975DA1B57A0AF00C010C9 /* main.m in Sources */,
 				188B79521B5E1E28009742FD /* FMResultSet.m in Sources */,
+				188436F51B846280006C1E78 /* BaseViewController.m in Sources */,
 				1866ADEE1B5897DA005BAD80 /* NSString+DDXML.m in Sources */,
 				75E97D821B5A308A0023B61B /* XMPPvCardTempTel.m in Sources */,
 				75E97D5A1B5A308A0023B61B /* XMPPRoster.xcdatamodel in Sources */,
@@ -2602,6 +2639,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
@@ -2614,6 +2654,7 @@
 					"$(PROJECT_DIR)/tt3/xmppFrameWork/Vendor/libidn",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2621,6 +2662,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
@@ -2633,6 +2677,7 @@
 					"$(PROJECT_DIR)/tt3/xmppFrameWork/Vendor/libidn",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

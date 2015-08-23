@@ -7,13 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 #import "AppDelegate.h"
 #import "XMPPFramework.h"
+#import "PersionInfoModel.h"
 
-@interface PersionInfoViewController : UIViewController<KKVcarDelegate>
+@interface PersionInfoViewController : BaseViewController <KKVcarDelegate>
 
+@property (nonatomic,strong) PersionInfoModel    *model;
 @property (nonatomic,strong) NSString *messageFrom;
+@property (nonatomic,strong) NSArray *userInfoDicArr;//本地UserInfo
+@property (nonatomic,assign) BOOL     isMe;
 @property (nonatomic,strong) XMPPJID  *jid;
-@property (weak, nonatomic) IBOutlet UIImageView *photoImgView;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end

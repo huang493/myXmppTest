@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
 typedef void(^changAccount)(NSString *userid,NSString *password,NSString *server);
-@interface KKLoginController : UIViewController
+@interface KKLoginController : BaseViewController
 @property  (nonatomic,strong) changAccount newAccount;
 
 @end

@@ -157,7 +157,11 @@
     cell.imgClickBlock = ^(NSString *messageFrom){
         PersionInfoViewController *persionVC = [[PersionInfoViewController alloc] init];
         persionVC.messageFrom = messageFrom;
-        persionVC.jid = [XMPPJID jidWithString:messageFrom];
+        XMPPJID *jid = [XMPPJID jidWithString:messageFrom];
+        if ([jid.user isEqualToString:[self xmppStream].myJID.user]) {
+            persionVC.isMe = YES;
+        }
+        persionVC.jid = jid;
         [weakSelf.navigationController pushViewController:persionVC animated:YES];
     };
     return cell;

@@ -50,6 +50,15 @@
         }
             break;
             
+        case NSDATA:
+        {
+            NSData *data = (NSData *) obj;
+            if (data.length==0 || data == nil) {
+                return NO;
+            }
+        }
+            break;
+            
         case NSDATE:
         {
             NSDate *date = (NSDate *) obj;

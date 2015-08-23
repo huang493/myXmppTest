@@ -6,13 +6,13 @@
 //  Copyright (c) 2015年 apple. All rights reserved.
 //
 
-#define DOMAINNAME                  @"appledemac-mini.local"//@"hsmdemacbook-pro.local"//
+#define DOMAINNAME                  @"hsmdemacbook-pro.local"//@"appledemac-mini.local"//
 #define SCREENWIDTH                 [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGH                 [UIScreen mainScreen].bounds.size.height
 #define IOS7                        ([[UIDevice currentDevice].systemVersion doubleValue] > 7.0 ? 1 : 0)
 
 /*数据库debug*/
-#define DATABASE_DEBUG                       0
+#define DATABASE_DEBUG                       1
 #if DATABASE_DEBUG
 #define DebugLog_DATABASE(frmt, ...)         {NSLog((frmt),##__VA_ARGS__);}
 #else
@@ -25,8 +25,9 @@ typedef enum {
     NSSTRING =0,
     NSARRAY  = 1,
     NSDICTIONARY =2,
-    NSDATE = 3,
-    OTHER = 4
+    NSDATA = 3,
+    NSDATE = 4,
+    OTHER = 5,
     
 } NSCLASSENUM;
 

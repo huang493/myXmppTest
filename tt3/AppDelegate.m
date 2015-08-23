@@ -12,7 +12,7 @@
 #import "DataBaseManager.h"
 #import "ChatMessageModel.h"
 #import "FriendInfoModel.h"
-
+#import "PersionInfoModel.h"
 
 @interface AppDelegate ()
 
@@ -59,17 +59,20 @@
 }
 
 -(void)setupVCard{
-    _vcardCoreDataStorage = [[XMPPvCardCoreDataStorage alloc] init];
-    _vCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:_vcardCoreDataStorage ];
-    _vCardAvtarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCardTempModule];
-    
-    [_vCardTempModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    [_vCardAvtarModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    
-    [_vCardTempModule activate:xmppStream];
-    [_vCardAvtarModule activate:xmppStream];
-//    [_vCardTempModule fetchvCardTempForJID:xmppStream.myJID];
-    
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _vcardCoreDataStorage = [[XMPPvCardCoreDataStorage alloc] init];
+        _vCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:_vcardCoreDataStorage ];
+        _vCardAvtarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCardTempModule];
+        
+        [_vCardTempModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
+        [_vCardAvtarModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
+        
+        [_vCardTempModule activate:xmppStream];
+        [_vCardAvtarModule activate:xmppStream];
+    });
+
 }
 -(void)goOnline{
     XMPPPresence *presence = [XMPPPresence presence];
@@ -88,6 +91,7 @@
     dispatch_once(&onceToken, ^{
         [self setupStream];
         [self setupRoster];//roster init 只能执行一次，不然就蹦，原因：未明。
+//        [self setupVCard];
     });
     
     NSLog(@"------------>>>Begin connect...");
@@ -164,7 +168,7 @@
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
     
     
-    NSLog(@"------------>>>iq in:%@",iq);
+//    NSLog(@"------------>>>iq in:%@",iq);
     
     return YES;
 }
@@ -273,12 +277,24 @@
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule
         didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
                      forJID:(XMPPJID *)jid{
+    
+    if ([jid isEqualToJID:xmppStream.myJID options:XMPPJIDCompareUser|XMPPJIDCompareDomain]) {
+        //更新本地UserInfo
+        PersionInfoModel *model = [PersionInfoModel loadDatasFrom:vCardTempModule.myvCardTemp];
+        [model saveUserInfoDicArrToLocal];
+    }
+
     if (_vcardDelegate) {
         [_vcardDelegate xmppvCardTempModule:vCardTempModule didReceivevCardTemp:vCardTemp forJID:jid];
     }
 }
 
 - (void)xmppvCardTempModuleDidUpdateMyvCard:(XMPPvCardTempModule *)vCardTempModule{
+    //更新本地UserInfo
+    PersionInfoModel *model = [PersionInfoModel loadDatasFrom:vCardTempModule.myvCardTemp];
+    [model saveUserInfoDicArrToLocal];
+    
+    //通知代理
     if (_vcardDelegate) {
         [_vcardDelegate xmppvCardTempModuleDidUpdateMyvCard:vCardTempModule];
     }

@@ -19,9 +19,6 @@
 
 -(void)setMessageWithXMPPMessage:(XMPPMessage *)xmppMessage{
     
-    
-    
-    
     _message     = [[xmppMessage elementForName:@"body"] stringValue];
     _messageFrom = [[xmppMessage attributeForName:@"from"] stringValue];
     _messageTo   = [[xmppMessage attributeForName:@"to"] stringValue];
