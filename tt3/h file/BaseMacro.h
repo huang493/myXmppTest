@@ -12,7 +12,7 @@
 #define IOS7                        ([[UIDevice currentDevice].systemVersion doubleValue] > 7.0 ? 1 : 0)
 
 /*数据库debug*/
-#define DATABASE_DEBUG                       1
+#define DATABASE_DEBUG                       0
 #if DATABASE_DEBUG
 #define DebugLog_DATABASE(frmt, ...)         {NSLog((frmt),##__VA_ARGS__);}
 #else

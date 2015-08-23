@@ -72,11 +72,12 @@
 -(void)loadTbaleViewDatas{
     
     rowHeighs   = @[@100,@44,@44,@44,@44];//[self loadRowHeighs];
-    leftTitles  = @[@"头像",@"昵称",@"生日",@"地址",@"电话"];//[self loadLeftTitles];
+    leftTitles  = @[@"头像",@"昵称",@"生日",@"街道",@"电话"];//[self loadLeftTitles];
 //    rightTitles = [self loadRightTitles];
 
     headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 250, 10, 80, 80)];
     headImgView.layer.cornerRadius = 5.0f;
+    headImgView.tag = 200;
     headImgView.clipsToBounds = YES;
     headImgView.image = [UIImage imageWithData:_model.photo];
     [headImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imgTap:)]];
@@ -86,15 +87,23 @@
     
     nickTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREENWIDTH - 250, 2, 200, 40)];
     nickTF.text = _model.nickName;
+    nickTF.tag  = 200+1;
     
     bdayTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREENWIDTH - 250, 2, 200, 40)];
+    bdayTF.placeholder = @"1990-03-08";
     bdayTF.text = _model.bday;
+    bdayTF.tag  = 200+2;
+
     
     addTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREENWIDTH - 250, 2, 200, 40)];
-    addTF.text = [NSString stringWithFormat:@"%@%@%@%@",_model.adrCtry,_model.adrStreet,_model.adrRegion,_model.adrExtadd];
+    addTF.text = [NSString stringWithFormat:@"%@",_model.adrStreet];
+    addTF.tag  = 200+3;
+
     
     tellTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREENWIDTH - 250, 2, 200, 40)];
     tellTF.text = _model.tell;
+    tellTF.tag  = 200+4;
+
     
     rightViews = [NSArray arrayWithObjects:headImgView,nickTF,bdayTF,addTF,tellTF, nil];
 
@@ -192,7 +201,7 @@
     for (; i<rightViews.count; i++) {
         NSIndexPath *index = [NSIndexPath indexPathForItem:i inSection:0];
         UITableViewCell *cell = [_tableview cellForRowAtIndexPath:index];
-        UITextField *tf = (UITextField *)[cell.contentView viewWithTag:100 + index.row];
+        UITextField *tf = (UITextField *)[cell.contentView viewWithTag:200 + index.row];
         if (![Tools checkVaild:tf.text withType:NSSTRING]) {
             i = -1;
             break;
@@ -201,6 +210,7 @@
     
     if (i == -1) {
         [self showHudOnKeyWindowTitle:@"请输入完整信息" subTitle:nil ActivityAlarm:NO after:1.5];
+        return ; 
     }
     
     [self submit];
@@ -216,11 +226,22 @@
     XMPPvCardTemp *vcard = [XMPPvCardTemp vCardTemp];
     vcard.photo = UIImageJPEGRepresentation(headImgView.image, 0.5);
     vcard.nickname = nickTF.text;
+
     
-    NSDateFormatter *form = [[NSDateFormatter alloc] init];
-    [form setDateFormat:@"yyyy-MM-dd"];
-    vcard.bday = [form dateFromString:bdayTF.text];
-    vcard.telecomsAddresses = @[tellTF.text];
+    NSXMLElement *bdayE = [NSXMLElement elementWithName:@"BDAY" stringValue:bdayTF.text];
+    [vcard addChild:bdayE];
+    
+    
+    NSXMLElement *adrElment = [NSXMLElement elementWithName:@"ADR"];
+    NSXMLElement *adrStreet = [NSXMLElement elementWithName:@"STREET" stringValue:addTF.text];
+    [adrElment addChild:adrStreet];
+    [vcard addChild:adrElment];
+
+    
+    NSXMLElement *tellE = [NSXMLElement elementWithName:@"TEL"];
+    NSXMLElement *numE = [NSXMLElement elementWithName:@"NUMBER" stringValue:tellTF.text];
+    [tellE addChild:numE];
+    [vcard addChild:tellE];
     
     NSLog(@"send data length:%ld",vcard.photo.length);
     [vcardTempModule updateMyvCardTemp:vcard];
@@ -312,7 +333,33 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell.contentView addSubview:rightViews[indexPath.row]];
+    
+    if (indexPath.row == 0) {
+        UIImageView *imgView = (UIImageView *)[cell.contentView viewWithTag:200];
+        if (!imgView) {
+            [cell.contentView addSubview:rightViews[indexPath.row]];
+        }
+    }
+    else{
+        if (_isMe) {
+            UITextField *textTF = (UITextField *)[cell.contentView viewWithTag:200+indexPath.row];
+            if (!textTF) {
+                [cell.contentView addSubview:rightViews[indexPath.row]];
+            }
+        }
+        else{
+            UILabel *textLab = (UILabel *)[cell.contentView viewWithTag:200+indexPath.row];
+            if (!textLab) {
+                UITextField *tf = rightViews[indexPath.row];
+                UILabel *lab = [[UILabel alloc] initWithFrame:tf.frame];
+                lab.text = tf.text;
+                [cell.contentView addSubview:lab];
+            }
+        }
+
+    }
+
+    
     
     UILabel *lab = (UILabel *)[cell.contentView viewWithTag:100+indexPath.row];
     if (!lab) {

@@ -24,14 +24,63 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)OKAction:(id)sender {
+    
+    if  ([self checkVaild]){
+     
+        
+        
+        
+    }
 }
-*/
+
+
+-(BOOL)checkVaild{
+    
+    NSUInteger errIndex = 0;
+    
+    if (![Tools checkVaild:_accountTF.text withType:NSSTRING]) {
+        errIndex = errIndex | 0x01;
+    }
+    
+    if (![Tools checkVaild:_passWordTF.text withType:NSSTRING]) {
+        errIndex = errIndex | 0x02;
+    }
+    
+    if (![Tools checkVaild:_passWordAgainTF.text withType:NSSTRING]) {
+        errIndex = errIndex | 0x04;
+    }
+    
+    if (![Tools checkVaild:_bdayTF.text withType:NSSTRING]) {
+        errIndex = errIndex | 0x08;
+    }
+    
+    if (![Tools checkVaild:_tellTF.text withType:NSSTRING]) {
+        errIndex = errIndex | 0x10;
+    }
+    
+    if (![_passWordTF.text isEqualToString:_passWordAgainTF.text]) {
+        errIndex = errIndex | 0x20;
+    }
+    
+    if (errIndex == 0) {
+        return YES;
+    }
+    else{
+        NSString *errInfo = nil;
+        NSString *errSubInfo = nil;
+        if (errIndex & 0b11011111 ) {
+            errSubInfo = @"两次密码不匹配";
+        }
+        if (errIndex | 0b00010000) {
+            errInfo = @"输入数据不能为空";
+        }
+
+        [self showHudOnKeyWindowTitle:errInfo subTitle:errSubInfo ActivityAlarm:NO after:1.5];
+        
+        return NO;
+     }
+}
 
 @end

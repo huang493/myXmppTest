@@ -8,7 +8,6 @@
 
 #import "KKChatController.h"
 #import "ChatCellTableViewCell.h"
-#import "chatCellFrame.h"
 #import "sendMessageView.h"
 #import "KKChatDelegate.h"
 #import "KKMessageDelegate.h"
@@ -18,6 +17,7 @@
 #import "ChatMessageModel.h"
 #import "DataBaseManager.h"
 #import "PersionInfoViewController.h"
+#import "KKVcarDelegate.h"
 
 
 @interface KKChatController ()<UITableViewDelegate,UITableViewDataSource,KKMessageDelegate>
@@ -26,6 +26,8 @@
     AppDelegate     *appDel;
     XMPPRoster      *roster;
     sendMessageView *sendView;
+    UIImage         *myHeaderPhoto;
+    UIImage         *friendHeaderPhoto;
 }
 @end
 
@@ -43,6 +45,17 @@
     messages = [[NSMutableArray alloc] init];
     appDel = [self getDelegate];
     appDel.messageDelegate = self;
+    appDel.vcardDelegate = self;
+    PersionInfoModel *model = [PersionInfoModel loadDatasFromLocal];
+    if (!model.photo) {
+        [appDel setupVCard];
+        [appDel.vCardTempModule fetchvCardTempForJID:appDel.xmppStream.myJID ignoreStorage:YES];
+        myHeaderPhoto = [UIImage imageNamed:@"3"];
+    }
+    myHeaderPhoto = [UIImage imageWithData:model.photo];
+    
+    
+    
     
     [self addTableView];
     [self addSendView];
@@ -153,7 +166,14 @@
     ChatCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatCell" forIndexPath:indexPath];
     ChatMessageModel *model     = [messages objectAtIndex:indexPath.row];
     [cell loadDatasFromChatMessageModel:model];
+    if (model.isme) {
+        cell.senderImgView.image = myHeaderPhoto;
+    }
+    else{
+        
+    }
     KKChatController *weakSelf = self;
+    
     cell.imgClickBlock = ^(NSString *messageFrom){
         PersionInfoViewController *persionVC = [[PersionInfoViewController alloc] init];
         persionVC.messageFrom = messageFrom;
@@ -164,9 +184,20 @@
         persionVC.jid = jid;
         [weakSelf.navigationController pushViewController:persionVC animated:YES];
     };
+    
     return cell;
 }
-
+#pragma -mark vCardTempDelegate ----
+- (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule
+        didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
+                     forJID:(XMPPJID *)jid{
+    
+    PersionInfoModel *model = [PersionInfoModel loadDatasFromLocal];
+    if (model.photo) {
+        myHeaderPhoto = [UIImage imageWithData:model.photo];
+    }
+    
+}
 #pragma -mark xmpp 发送消息-----
 - (void)sendMessage:(NSString *)message andData:(NSData *)data withType:(enum MessageType)type{
     //本地输入框中的信息

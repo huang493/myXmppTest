@@ -153,7 +153,8 @@
         NSXMLElement *badyElment = arrTmp[0];
         model.bday = [badyElment stringValue];
     }
-    
+    NSLog(@"load from net :%@",model);
+
     return model;
 }
 
@@ -161,7 +162,7 @@
     
     NSString *prePath = [Tools getCurrentUserDoucmentPath];
     PersionInfoModel *model = [NSKeyedUnarchiver unarchiveObjectWithFile:[NSString stringWithFormat:@"%@/Userinfo",prePath]];
-    
+    NSLog(@"load from local :%@",model);
     return model;
 }
 

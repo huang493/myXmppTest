@@ -48,8 +48,8 @@
     _messageLabel.text   = model.message;
     [self setCellHeigh:model.cellHeigt];
     if (model.isme) {
-        PersionInfoModel *model = [PersionInfoModel loadDatasFromLocal];
-        _senderImgView.image = [UIImage imageWithData:model.photo];
+//        PersionInfoModel *model = [PersionInfoModel loadDatasFromLocal];
+//        _senderImgView.image = [UIImage imageWithData:model.photo];
     }else{
         _senderImgView.image = [UIImage imageNamed:@"4"];
     }

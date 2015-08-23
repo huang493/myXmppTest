@@ -283,6 +283,7 @@
         PersionInfoModel *model = [PersionInfoModel loadDatasFrom:vCardTempModule.myvCardTemp];
         [model saveUserInfoDicArrToLocal];
     }
+    
 
     if (_vcardDelegate) {
         [_vcardDelegate xmppvCardTempModule:vCardTempModule didReceivevCardTemp:vCardTemp forJID:jid];

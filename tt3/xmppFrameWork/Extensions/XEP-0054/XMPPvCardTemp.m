@@ -302,7 +302,9 @@ NSString *const kXMPPvCardTempElement = @"vCard";
 
 
 - (NSArray *)addresses { return nil; }
-- (void)addAddress:(XMPPvCardTempAdr *)adr { }
+- (void)addAddress:(XMPPvCardTempAdr *)adr {
+    NSLog(@"NIMA");
+}
 - (void)removeAddress:(XMPPvCardTempAdr *)adr { }
 - (void)setAddresses:(NSArray *)adrs { }
 - (void)clearAddresses { }

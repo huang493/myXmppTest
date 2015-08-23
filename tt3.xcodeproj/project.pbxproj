@@ -79,7 +79,6 @@
 		18A975E81B57A0AF00C010C9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A975E61B57A0AF00C010C9 /* LaunchScreen.xib */; };
 		18A975F41B57A0AF00C010C9 /* tt3Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A975F31B57A0AF00C010C9 /* tt3Tests.m */; };
 		18B971361B5F7CE0006D26EE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B971351B5F7CE0006D26EE /* MBProgressHUD.m */; };
-		18DF237C1B71AD1A002FA886 /* chatCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF23741B71AD1A002FA886 /* chatCellFrame.m */; };
 		18DF237D1B71AD1A002FA886 /* ChatCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF23761B71AD1A002FA886 /* ChatCellTableViewCell.m */; };
 		18DF237E1B71AD1A002FA886 /* ChatCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18DF23771B71AD1A002FA886 /* ChatCellTableViewCell.xib */; };
 		18DF237F1B71AD1A002FA886 /* ChatMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF23791B71AD1A002FA886 /* ChatMessageModel.m */; };
@@ -464,8 +463,6 @@
 		18A975F31B57A0AF00C010C9 /* tt3Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tt3Tests.m; sourceTree = "<group>"; };
 		18B971341B5F7CE0006D26EE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		18B971351B5F7CE0006D26EE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		18DF23731B71AD1A002FA886 /* chatCellFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chatCellFrame.h; sourceTree = "<group>"; };
-		18DF23741B71AD1A002FA886 /* chatCellFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = chatCellFrame.m; sourceTree = "<group>"; };
 		18DF23751B71AD1A002FA886 /* ChatCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCellTableViewCell.h; sourceTree = "<group>"; };
 		18DF23761B71AD1A002FA886 /* ChatCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatCellTableViewCell.m; sourceTree = "<group>"; };
 		18DF23771B71AD1A002FA886 /* ChatCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -1246,8 +1243,6 @@
 		18DF23721B71AD1A002FA886 /* Chart */ = {
 			isa = PBXGroup;
 			children = (
-				18DF23731B71AD1A002FA886 /* chatCellFrame.h */,
-				18DF23741B71AD1A002FA886 /* chatCellFrame.m */,
 				18DF23751B71AD1A002FA886 /* ChatCellTableViewCell.h */,
 				18DF23761B71AD1A002FA886 /* ChatCellTableViewCell.m */,
 				18DF23771B71AD1A002FA886 /* ChatCellTableViewCell.xib */,
@@ -2365,7 +2360,6 @@
 				1866ADD81B5897DA005BAD80 /* XMPPMessage.m in Sources */,
 				1866ADCB1B5897DA005BAD80 /* XMPPDeprecatedPlainAuthentication.m in Sources */,
 				75E97DA21B5A308A0023B61B /* XMPPStreamManagementMemoryStorage.m in Sources */,
-				18DF237C1B71AD1A002FA886 /* chatCellFrame.m in Sources */,
 				75E97DA81B5A308A0023B61B /* XMPPTime.m in Sources */,
 				75E97D631B5A308A0023B61B /* XMPPIQ+JabberRPCResonse.m in Sources */,
 				75E97D5D1B5A308A0023B61B /* XMPPResourceMemoryStorageObject.m in Sources */,
