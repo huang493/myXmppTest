@@ -51,6 +51,16 @@ typedef void(^compeletedBlock)(FMDatabase *db);
  */
 -(BOOL)closeDB:(FMDatabase *)db;
 
+
+/**
+ *  执行sql语句
+ *
+ *  @param sql
+ *
+ *  @return 是否成功
+ */
+-(BOOL)dataBase:(FMDatabase*) db executeSql:(NSString *)sql;
+
 /**
  *  创建表
  *

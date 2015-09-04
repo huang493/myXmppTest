@@ -7,7 +7,7 @@
 //
 
 #import "PersionInfoModel.h"
-/*
+/*         
  黄诗猛：
  1.只解析了昵称，电话，邮件，头像，地址，生日;
  2.头像类型：image/gif, image/jpeg, or image/png;
@@ -153,7 +153,7 @@
         NSXMLElement *badyElment = arrTmp[0];
         model.bday = [badyElment stringValue];
     }
-    NSLog(@"load from net :%@",model);
+//    NSLog(@"load from net :%@",model);
 
     return model;
 }
@@ -162,7 +162,7 @@
     
     NSString *prePath = [Tools getCurrentUserDoucmentPath];
     PersionInfoModel *model = [NSKeyedUnarchiver unarchiveObjectWithFile:[NSString stringWithFormat:@"%@/Userinfo",prePath]];
-    NSLog(@"load from local :%@",model);
+//    NSLog(@"load from local :%@",model);
     return model;
 }
 
@@ -171,13 +171,17 @@
     NSString *prePath = [Tools getCurrentUserDoucmentPath];
     NSString *path = [NSString stringWithFormat:@"%@/Userinfo",prePath];
     
+    //保存头像---->easy use
+    if ([Tools checkVaild:self.photo withType:NSDATA]) {
+        [self.photo writeToFile:[NSString stringWithFormat:@"%@/%@.png",prePath,KmyPhoto] atomically:YES];
+    }
+    //保存其他个人信息
     BOOL isSuccess = [NSKeyedArchiver archiveRootObject:self toFile:path];
     if (isSuccess) {
         NSLog(@"saveUserInfoDicArrToLocal Success");
     }
     else{
         NSLog(@"saveUserInfoDicArrToLocal fail");
-        
     }
     
 }

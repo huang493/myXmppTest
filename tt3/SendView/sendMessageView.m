@@ -139,6 +139,12 @@
     return YES;
 }
 
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    
+    currentTpye = Text;
+    return YES;
+}
+
 #pragma -mark --------KeyBoardNotification Action--------
 -(void)keyboardWillAppear:(NSNotification *)no{
     

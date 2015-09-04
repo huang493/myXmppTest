@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 #import "XMPPFramework.h"
 #import "ResgistViewController.h"
+#import "XMPPClient.h"
 
 @interface KKLoginController () <UITextFieldDelegate>
 {
@@ -148,14 +149,28 @@
         
         params = @[
                    @"id:integer primary key autoincrement",
-                   @"jid:text",            //JID
-                   @"nickName:text",       //昵称
-                   @"gender:bool",         //性别
-                   @"subscription:text",   //订阅状态
-                   @"headImg:text"         //头像
+                   @"jid:text",             //JID
+                   @"nickName:text",        //昵称
+                   @"gender:bool",          //性别
+                   @"subscription:text",    //订阅状态
+                   @"headImg:text",         //头像
+                   @"listName:text",        //所在组的组名
+                   @"photo:text",           //头像
+                   @"bday:text",            //生日
+                   @"adrStreet:text",       //地址
+                   @"tell:text",             //电话
+                   @"groupName:text"
                    ];
+        //                   @"group:text",           //群
+
         if (![dbManager createTable:@"friends" withParams:params toDataBase:db]) {
             NSLog(@"table friends create fial");
+        }
+        else{
+            //创建好友DB成功，请求好友列表
+            AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+            [appdele.client setupRoster];
+            [appdele.client.roster fetchRoster];
         }
         
         [dbManager closeDB:db];
@@ -169,13 +184,14 @@
     [defaults setObject:serverTextField.text forKey:@"server"];
     [defaults synchronize];
     
-    
+    //请求vCard
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-    [appdele setupVCard];
-    XMPPStream  *stream = appdele.xmppStream;
-    XMPPvCardTempModule *vCardTempModule = appdele.vCardTempModule;
+    [appdele.client setupVCard];
+    XMPPStream  *stream = appdele.client.xmppStream;
+    XMPPvCardTempModule *vCardTempModule = appdele.client.vCardTempModule;
     [vCardTempModule fetchvCardTempForJID:stream.myJID ignoreStorage:YES];
     
+    //回传新登入的用户数据
     if (_newAccount) {
         _newAccount(accountTextField.text,passwordTextField.text,serverTextField.text);
     }
@@ -205,15 +221,15 @@
     if (![accountTextField.text isEqualToString:[defaults objectForKey:@"userid"]]) {
         if (accountTextField.text && passwordTextField.text && serverTextField.text) {
             
-            [self showHudOnKeyWindowTitle:@"loging..." subTitle:@"please waiting..." ActivityAlarm:YES];
+            [self showHudOnViewTitle:@"loging..." subTitle:@"please waiting..." ActivityAlarm:YES after:0];
 
             [defaults setObject:accountTextField.text forKey:@"userid"];
             [defaults setObject:passwordTextField.text forKey:@"password"];
             [defaults setObject:serverTextField.text forKey:@"server"];
             
             AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            [del disconnect];
-            [del connect];
+            [del.client disconnect];
+            [del.client connect];
         }
     }
     
@@ -250,14 +266,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

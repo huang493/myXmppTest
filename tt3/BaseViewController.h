@@ -18,6 +18,7 @@
 -(void)showHud:(BOOL)hidden;
 -(void)showHudOnKeyWindowTitle:(NSString *)title subTitle:(NSString *)subTitle ActivityAlarm:(BOOL)yesOrNo;
 -(void)showHudOnKeyWindowTitle:(NSString *)title subTitle:(NSString *)subTitle ActivityAlarm:(BOOL)yesOrNo after:(CGFloat)seconds;
-
+-(void)showHudOnKeyWindowCustomView:(UIView *)csView after:(CGFloat)seconds;
+-(void)showHudOnViewTitle:(NSString *)title subTitle:(NSString *)subTitle ActivityAlarm:(BOOL)yesOrNo after:(CGFloat)seconds;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ResgistViewController.h"
+#import "AppDelegate.h"
 
 @interface ResgistViewController ()
 
@@ -17,6 +18,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self setupView];
+    
+    
+}
+
+-(void)setupView{
+    _accountTF.layer.cornerRadius = 5.0f;
+    _accountTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _accountTF.layer.borderWidth = 0.5f;
+    
+    
+    _passWordTF.layer.cornerRadius = 5.0f;
+    _passWordTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _passWordTF.layer.borderWidth = 0.5f;;
+    
+    _passWordAgainTF.layer.cornerRadius = 5.0f;
+    _passWordAgainTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _passWordAgainTF.layer.borderWidth = 0.5f;;
+    
+    _bdayTF.layer.cornerRadius = 5.0f;
+    _bdayTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _bdayTF.layer.borderWidth = 0.5f;;
+    
+    _tellTF.layer.cornerRadius = 5.0f;
+    _tellTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _tellTF.layer.borderWidth = 0.5f;
+    
+    
+    _accountTF.text = @"text7";
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -27,10 +58,20 @@
 
 - (IBAction)OKAction:(id)sender {
     
-    if  ([self checkVaild]){
+    if([self checkVaild]){
      
+        [[NSUserDefaults standardUserDefaults] setObject:_accountTF.text forKey:kRegisteUserId];
+        [[NSUserDefaults standardUserDefaults] setObject:_passWordTF.text forKey:kRegistePassword];
+        
+        AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+        [appdele.client goOffline];
+
         
         
+        
+        
+        [appdele.client disconnect];
+        [appdele.client anonymousConnect];
         
     }
 }

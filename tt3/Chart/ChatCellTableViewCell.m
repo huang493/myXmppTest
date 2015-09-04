@@ -44,16 +44,14 @@
 -(void)loadDatasFromChatMessageModel:(ChatMessageModel *)model{
     
     _model = model;
-    _timeLabel.text      = @"2015-08-01";//[model.time description];
+    NSDateFormatter *form = [[NSDateFormatter alloc] init];
+    [form setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    form.timeZone = [NSTimeZone systemTimeZone];
+    _timeLabel.text      = [form stringFromDate:model.time];
     _messageLabel.text   = model.message;
-    [self setCellHeigh:model.cellHeigt];
-    if (model.isme) {
-//        PersionInfoModel *model = [PersionInfoModel loadDatasFromLocal];
-//        _senderImgView.image = [UIImage imageWithData:model.photo];
-    }else{
-        _senderImgView.image = [UIImage imageNamed:@"4"];
-    }
     
+    
+    [self setCellHeigh:model.cellHeigt];
     [self frameReturnBegin];
     [self frameChange];
     [self setCellHeigh:model.cellHeigt];

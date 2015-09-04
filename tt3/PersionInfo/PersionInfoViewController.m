@@ -35,6 +35,8 @@
     UITextField *bdayTF;
     UITextField *addTF;
     UITextField *tellTF;
+    
+    BOOL     heigh;
 }
 @property (weak, nonatomic) IBOutlet UIButton *OKBtn;
 @end
@@ -45,6 +47,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [self setNav];
     [self vCardSetUp];
     
     if (!_isMe) {
@@ -66,8 +69,13 @@
     }
 
     [self tableViewSetUp];
-
+    
 }
+
+-(void)setNav{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(OKBtnAction:)];
+}
+
 
 -(void)loadTbaleViewDatas{
     
@@ -80,10 +88,11 @@
     headImgView.tag = 200;
     headImgView.clipsToBounds = YES;
     headImgView.image = [UIImage imageWithData:_model.photo];
-    [headImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imgTap:)]];
-    headImgView.userInteractionEnabled = YES;
-    
-    
+    if(_isMe){
+        [headImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imgTap:)]];
+        headImgView.userInteractionEnabled = YES;
+    }
+
     
     nickTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREENWIDTH - 250, 2, 200, 40)];
     nickTF.text = _model.nickName;
@@ -154,14 +163,17 @@
     [_tableview registerNib:[UINib nibWithNibName:@"PersionInfoCellTableViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     [_tableview registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell1"];
     ;
+
 }
+
+
 -(void)vCardSetUp{
 
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-    appdele.vcardDelegate = self;
-    [appdele setupVCard];
-    xmppStream = appdele.xmppStream;
-    vcardTempModule = appdele.vCardTempModule;
+    appdele.client.vcardDelegate = self;
+    [appdele.client setupVCard];
+    xmppStream = appdele.client.xmppStream;
+    vcardTempModule = appdele.client.vCardTempModule;
 }
 
 

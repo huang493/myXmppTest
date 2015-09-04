@@ -11,6 +11,10 @@
 #define SCREENHEIGH                 [UIScreen mainScreen].bounds.size.height
 #define IOS7                        ([[UIDevice currentDevice].systemVersion doubleValue] > 7.0 ? 1 : 0)
 
+
+#define KmyPhoto                    @"myPhoto"
+
+
 /*数据库debug*/
 #define DATABASE_DEBUG                       0
 #if DATABASE_DEBUG
@@ -48,10 +52,14 @@ enum MessageType{
     File,
 };
 
+#pragma -mark NSUserdefault--
+#define kRegisteUserId      @"regsiteUserId"
+#define kRegistePassword    @"regsitePassword"
 
+#pragma -mark Notification--
 #define didReceiveVcardInfo @"didReceiveVcardInfo"
-
-
+#define kRegisteSuccess     @"registeSuccess"
+#define kRegisteFail        @"registeFail"
 
 /* messages table stracuture
  @[@"id:integer primary key autoincrement",

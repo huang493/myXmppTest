@@ -60,12 +60,12 @@
 -(XMPPStream *)xmppStream{
     
     AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    return del.xmppStream;
+    return del.client.xmppStream;
 }
 //获取当前XMPPRoster
 -(XMPPRoster *)xmppRoster{
     AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    return del.roster;
+    return del.client.roster;
 }
 
 @end

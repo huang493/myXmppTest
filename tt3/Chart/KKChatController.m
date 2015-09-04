@@ -8,6 +8,7 @@
 
 #import "KKChatController.h"
 #import "ChatCellTableViewCell.h"
+#import "ChartImageCellTableViewCell.h"
 #import "sendMessageView.h"
 #import "KKChatDelegate.h"
 #import "KKMessageDelegate.h"
@@ -18,49 +19,66 @@
 #import "DataBaseManager.h"
 #import "PersionInfoViewController.h"
 #import "KKVcarDelegate.h"
+#import "XMPPSender.h"
+#import "FriendInfoModel.h"
 
 
 @interface KKChatController ()<UITableViewDelegate,UITableViewDataSource,KKMessageDelegate>
 {
     NSMutableArray  *messages;
     AppDelegate     *appDel;
-    XMPPRoster      *roster;
+    NSString        *currentUserId;
     sendMessageView *sendView;
     UIImage         *myHeaderPhoto;
     UIImage         *friendHeaderPhoto;
+    PersionInfoModel *myInfo;
+    FriendInfoModel  *friendInfo;
 }
 @end
 
 @implementation KKChatController
 
 -(void)viewWillAppear:(BOOL)animated{
-    
-//    [sendView.messageTF becomeFirstResponder];
+    [_tView reloadData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
-    messages = [[NSMutableArray alloc] init];
-    appDel = [self getDelegate];
-    appDel.messageDelegate = self;
-    appDel.vcardDelegate = self;
-    PersionInfoModel *model = [PersionInfoModel loadDatasFromLocal];
-    if (!model.photo) {
-        [appDel setupVCard];
-        [appDel.vCardTempModule fetchvCardTempForJID:appDel.xmppStream.myJID ignoreStorage:YES];
-        myHeaderPhoto = [UIImage imageNamed:@"3"];
-    }
-    myHeaderPhoto = [UIImage imageWithData:model.photo];
-    
-    
-    
-    
+
+    [self config];
+    [self loadTalkerInfo];
     [self addTableView];
     [self addSendView];
     [self initNavgationBarItem];
 }
+
+-(void)config{
+    self.view.backgroundColor = [UIColor whiteColor];
+
+    messages = [[NSMutableArray alloc] init];
+    appDel = [self getDelegate];
+    appDel.client.messageDelegate = self;
+    currentUserId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userid"];
+}
+
+-(void)loadTalkerInfo{
+    
+    myInfo = [PersionInfoModel loadDatasFromLocal];
+    friendInfo = [FriendInfoModel loadFriendInfoFromLocal:_chatWithUser];
+    
+    if (!myInfo) {
+        [appDel.client setupVCard];
+        [appDel.client.vCardTempModule fetchvCardTempForJID:appDel.client.xmppStream.myJID ignoreStorage:YES];
+    }
+    
+    if (!friendInfo) {
+        [appDel.client setupVCard];
+        [appDel.client.vCardTempModule fetchvCardTempForJID:[XMPPJID jidWithString:_chatWithUser] ignoreStorage:YES];
+    }
+    
+}
+
 -(void)addTableView{
     _tView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                            0,
@@ -70,7 +88,8 @@
                                           style:UITableViewStylePlain];
     _tView.delegate = self;
     _tView.dataSource = self;
-    [_tView registerNib:[UINib nibWithNibName:@"ChatCellTableViewCell" bundle:nil] forCellReuseIdentifier:@"chatCell"];
+    [_tView registerNib:[UINib nibWithNibName:@"ChatCellTableViewCell" bundle:nil] forCellReuseIdentifier:@"chatTextCell"];
+    [_tView registerNib:[UINib nibWithNibName:@"ChartImageCellTableViewCell" bundle:nil] forCellReuseIdentifier:@"chatImageCell"];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     tap.numberOfTapsRequired = 1;
     [_tView addGestureRecognizer:tap];
@@ -130,14 +149,8 @@
 -(XMPPStream *)xmppStream{
     
     AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    return del.xmppStream;
+    return del.client.xmppStream;
 }
-
--(XMPPRoster *)roster{
-    AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    return del.roster;
-}
-
 
 #pragma mark KKMessageDelegate
 -(void)newMessageReceived:(ChatMessageModel*)message{
@@ -148,8 +161,15 @@
 }
 #pragma -mark UITableViewDelegate & UITableViewDataDelegate
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     ChatMessageModel *model = messages[indexPath.row];
-    return  model.cellHeigt + 60 - 21;
+    if ([model.bodyType isEqualToString:@"text"]) {
+        return  model.cellHeigt + 60 - 21;
+    }
+    else {
+        return  model.cellHeigt + 35;
+    }
+    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -163,103 +183,86 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    ChatCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatCell" forIndexPath:indexPath];
+    NSString *idenfitif = nil;
     ChatMessageModel *model     = [messages objectAtIndex:indexPath.row];
-    [cell loadDatasFromChatMessageModel:model];
-    if (model.isme) {
-        cell.senderImgView.image = myHeaderPhoto;
-    }
-    else{
+    UITableViewCell *cell1 = nil;
+    
+    if ([model.bodyType isEqualToString:@"text"]) {
+        idenfitif = @"chatTextCell";
+        ChatCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:idenfitif forIndexPath:indexPath];
         
-    }
-    KKChatController *weakSelf = self;
-    
-    cell.imgClickBlock = ^(NSString *messageFrom){
-        PersionInfoViewController *persionVC = [[PersionInfoViewController alloc] init];
-        persionVC.messageFrom = messageFrom;
-        XMPPJID *jid = [XMPPJID jidWithString:messageFrom];
-        if ([jid.user isEqualToString:[self xmppStream].myJID.user]) {
-            persionVC.isMe = YES;
+        [cell loadDatasFromChatMessageModel:model];
+        KKChatController *weakSelf = self;
+        cell.imgClickBlock = ^(NSString *messageFrom){
+            PersionInfoViewController *persionVC = [[PersionInfoViewController alloc] init];
+            persionVC.messageFrom = messageFrom;
+            XMPPJID *jid = [XMPPJID jidWithString:messageFrom];
+            if ([jid.user isEqualToString:[self xmppStream].myJID.user]) {
+                persionVC.isMe = YES;
+            }
+            persionVC.jid = jid;
+            [weakSelf.navigationController pushViewController:persionVC animated:YES];
+        };
+        
+        if (model.isme) {
+            cell.senderImgView.image = [UIImage imageWithData:myInfo.photo];
         }
-        persionVC.jid = jid;
-        [weakSelf.navigationController pushViewController:persionVC animated:YES];
-    };
+        else{
+            cell.senderImgView.image = [UIImage imageWithData:friendInfo.photo];
+        }
+
+        cell1 = cell;
+    }
+    else if([model.bodyType isEqualToString:@"image"]){
+        idenfitif = @"chatImageCell";
+        ChartImageCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:idenfitif forIndexPath:indexPath];
+        [cell loadFromChartMessageModel:model];
+        KKChatController *weakSelf = self;
+        cell.imgClickBlock = ^(NSString *messageFrom){
+            PersionInfoViewController *persionVC = [[PersionInfoViewController alloc] init];
+            persionVC.messageFrom = messageFrom;
+            XMPPJID *jid = [XMPPJID jidWithString:messageFrom];
+            if ([jid.user isEqualToString:[self xmppStream].myJID.user]) {
+                persionVC.isMe = YES;
+            }
+            persionVC.jid = jid;
+            [weakSelf.navigationController pushViewController:persionVC animated:YES];
+        };
+        
+        if (model.isme) {
+            cell.senderImgView.image = [UIImage imageWithData:myInfo.photo];
+        }
+        else{
+            cell.senderImgView.image = [UIImage imageWithData:friendInfo.photo];
+        }
+        
+        cell1 = cell;
+    }
     
-    return cell;
+    return cell1;
 }
 #pragma -mark vCardTempDelegate ----
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule
         didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
                      forJID:(XMPPJID *)jid{
-    
-    PersionInfoModel *model = [PersionInfoModel loadDatasFromLocal];
-    if (model.photo) {
-        myHeaderPhoto = [UIImage imageWithData:model.photo];
+    if ([[jid bare] isEqualToString:_chatWithUser]) {
+        friendInfo = [FriendInfoModel loadFriendInfoFromLocal:_chatWithUser];
+    }
+    else{
+        myInfo = [PersionInfoModel loadDatasFromLocal];
     }
     
+    [_tView reloadData];
 }
 #pragma -mark xmpp 发送消息-----
 - (void)sendMessage:(NSString *)message andData:(NSData *)data withType:(enum MessageType)type{
-    //本地输入框中的信息
-    if (message.length > 0 || data.length>0) {
-        
-        //XMPPFramework主要是通过KissXML来生成XML文件
-        //生成<body>文档
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        
-        NSString *bodyType = nil;
-        switch (type) {
-            case Text:
-            {
-                [body setStringValue:message];
-                bodyType = @"text";
-            }
-                break;
-            case Image:
-            {
-                NSString *dataStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-                [body setStringValue:dataStr];
-                bodyType = @"image";
-
-            }
-                break;
-                
-            default:
-                break;
-        }
-
-        
-        //生成XML消息文档
-        NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
-        //消息类型
-        [mes addAttributeWithName:@"type" stringValue:@"chat"];
-        //body类型
-        [mes addAttributeWithName:@"bodyType" stringValue:bodyType];
-        //发送给谁
-        [mes addAttributeWithName:@"to" stringValue:_chatWithUser];
-        //由谁发送
-        [mes addAttributeWithName:@"from" stringValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"userid"]];
-        //组合
-        [mes addChild:body];
-        
-        //发送消息
-        [[self xmppStream] sendElement:mes];
-        
-        
-        //保存发送的消息到数据库
-        DataBaseManager *manager = [DataBaseManager shareDataBaseManager];
-        FMDatabase *db = [manager getDBWithPath:[NSString stringWithFormat:@"%@",[Tools getCurrentUserDoucmentPath]]];
-        
-        ChatMessageModel *model = [[ChatMessageModel alloc] init];
-        [model setMessageWithNSXMLElement:mes];
-        [model insertIntoTable:@"messages" forDB:db];
-        
-        [manager closeDB:db];
-        
+    
+    ChatMessageModel *model = [XMPPSender sendMessage:message andData:data withType:type to:_chatWithUser];
+//    [XMPPSender sendIq];
+    if (model) {
         //更新UI
         [messages addObject:model];
         [self.tView reloadData];
-        
     }
 }
 

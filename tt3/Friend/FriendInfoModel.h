@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "XMPPFramework.h"
+#import "PersionInfoModel.h"
+#import "FMDB.h"
+#import "Tools.h"
+#import "BaseMacro.h"
 
 @interface FriendInfoModel : NSObject
 /* friends table structure
@@ -23,12 +27,22 @@
 
 @property (nonatomic,strong) NSString *jid;
 @property (nonatomic,strong) NSString *nickName;
-@property (nonatomic,strong) NSString *headImg;
 @property (nonatomic,strong) NSString *group;      //所在的列表
 @property (nonatomic,strong) NSString *subscription;
 @property (nonatomic,assign) BOOL     gender;
 
+@property (nonatomic,strong) NSData   *photo;
+@property (nonatomic,strong) NSString *bday;
+@property (nonatomic,strong) NSString *adrStreet;
+@property (nonatomic,strong) NSString *tell;
 
--(void)setFriendInfoModelWith:(NSXMLElement *)item;
++(FriendInfoModel *)loadDataFrom:(XMPPvCardTemp*)vCardTemp;
++(FriendInfoModel *)setFriendInfoModelWith:(NSXMLElement *)item;
++(FriendInfoModel *)loadFriendInfoFromLocal:(NSString *)jid;
+
+-(BOOL)insertIntoTable:(NSString *)tableName forDB:(FMDatabase *)db;
+-(BOOL)deleteFromTable:(NSString *)tabelName forDB:(FMDatabase *)db;
+-(BOOL)updateFromTable:(NSString *)tabelName forDB:(FMDatabase *)db newInfo:(FriendInfoModel *)newFriendInfo oldInfo:(FriendInfoModel *)oldFriendInfo;
+
 
 @end

@@ -9,7 +9,6 @@
 #import "ChatMessageModel.h"
 #import "FMDB.h"
 #import "DataBaseManager.h"
-#import "AppDelegate.h"
 
 @implementation ChatMessageModel
 {
@@ -26,30 +25,38 @@
     _messsageid  = [[xmppMessage attributeForName:@"id"] stringValue];
     _bodyType    = [[xmppMessage attributeForName:@"bodyType"] stringValue];
     _isme        = NO;
-
-    if ([_message isEqualToString:@"image"]) {
-        NSData *data = [[NSData alloc] initWithBase64EncodedString:_message options:0];
-        UIImage *img = [UIImage imageWithData:data];
-        UIWindow *win = [UIApplication sharedApplication].keyWindow;
-        
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
-        imgView.image = img;
-        [win addSubview:imgView];
-    }
-
-
+    _time        = [NSDate date];
     
-    
-    
-    
-    
-    //添加时间
-    NSDateFormatter *form = [[NSDateFormatter alloc] init];
-    [form setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    _time        = [form dateFromString:[NSString stringWithFormat:@"%@",[NSDate date]]];
-    _cellHeigt   = [self calculateHeighWithMessage:_message];
-    
-    
+    [self caculateCellHeigh];
+//    //兼容Adium
+//    if (!_bodyType) {
+//        _bodyType = @"text";
+//    }
+//    
+//    if ([_bodyType isEqualToString:@"image"]) {
+//        NSData *data = [[NSData alloc] initWithBase64EncodedString:_message options:0];
+//        UIImage *img = [UIImage imageWithData:data];
+//        
+//        CGFloat maxWidth =  SCREENWIDTH - 40 - 8 - 8;
+//        if(img.size.width > maxWidth) {
+//            //宽度>极限宽度
+//            CGFloat q = maxWidth/img.size.width;
+//            _cellHeigt = q*img.size.height;
+//        }
+//        else if(img.size.width <= maxWidth && img.size.width > 60){
+//            //60<宽度<极限宽度
+//            _cellHeigt = img.size.height;
+//        }
+//        else {
+//            //宽度<60
+//            _cellHeigt = 60.0;
+//        }
+// 
+//    }
+//    else{
+//        _cellHeigt   = [self calculateHeighWithMessage:_message];
+//
+//    }
 
 }
 
@@ -60,14 +67,49 @@
     _messageTo   = [[mes attributeForName:@"to"] stringValue];
     _type        = [[mes attributeForName:@"type"] stringValue];
     _messsageid  = [[mes attributeForName:@"id"] stringValue];
-    
-    //添加时间
-    NSDateFormatter *form = [[NSDateFormatter alloc] init];
-    [form setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    _time        = [form dateFromString:[[NSDate date] description]];
+    _time        = [NSDate date];
     _cellHeigt   = [self calculateHeighWithMessage:_message];
     _isme        = YES;
+    _bodyType    = [[mes attributeForName:@"bodyType"] stringValue];
+    [self caculateCellHeigh];
 }
+
+
+
+-(void)caculateCellHeigh{
+    //兼容Adium
+    if (!_bodyType) {
+        _bodyType = @"text";
+    }
+    
+    if ([_bodyType isEqualToString:@"image"]) {
+        NSData *data = [[NSData alloc] initWithBase64EncodedString:_message options:0];
+        UIImage *img = [UIImage imageWithData:data];
+        
+        CGFloat maxWidth =  SCREENWIDTH - 40 - 8 - 8;
+        if(img.size.width > maxWidth) {
+            //宽度>极限宽度
+            CGFloat q = maxWidth/img.size.width;
+            _cellHeigt = q*img.size.height;
+        }
+        else if(img.size.width <= maxWidth && img.size.width > 60){
+            //60<宽度<极限宽度
+            _cellHeigt = img.size.height;
+        }
+        else {
+            //宽度<60
+            _cellHeigt = 60.0;
+        }
+        
+    }
+    else{
+        _cellHeigt   = [self calculateHeighWithMessage:_message];
+        
+    }
+
+}
+
+
 
 
 -(BOOL)insertIntoTable:(NSString *)tableName forDB:(FMDatabase *)db1{

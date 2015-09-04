@@ -109,6 +109,7 @@ static DataBaseManager *manager = nil;
 }
 
 
+
 /**
  *  创建表
  *
@@ -187,7 +188,6 @@ static DataBaseManager *manager = nil;
         else{
             [sql insertString:[NSString stringWithFormat:@",'%@'",dataDic[key]] atIndex:sql.length - 1];
         }
-        
     }
     
     DebugLog_DATABASE(@"insert into sql:%@",sql);
@@ -212,7 +212,6 @@ static DataBaseManager *manager = nil;
     
     NSMutableString *sql = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"delete from %@ where ",tableName]];
 
-    
     [dataDic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
        
         if ([sql containsString:@"="]) {
@@ -260,7 +259,7 @@ static DataBaseManager *manager = nil;
     
     [oldDic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
        
-        [condtions addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ = '%@'",key,obj],@"and", nil]];
+        [condtions addObject:[NSDictionary dictionaryWithObjectsAndKeys:obj,key,nil]];
     }];
     
     FMResultSet *res = [self queryDatasWhereConditionArray:condtions FromTable:tabelName forDB:db withTpye:@"select"];
@@ -276,7 +275,7 @@ static DataBaseManager *manager = nil;
         NSArray *oldKeys = [oldDic allKeys];
         
         for (NSString *key in newKeys) {
-            if (newDatasStr.length) {
+            if (!newDatasStr.length) {
                 [newDatasStr appendString:[NSString stringWithFormat:@" set %@ = '%@'",key,newDic[key]]];
             }
             else{
@@ -287,7 +286,7 @@ static DataBaseManager *manager = nil;
         
         
         for (NSString *key in oldKeys) {
-            if (oldDatasStr.length) {
+            if (!oldDatasStr.length) {
                 [oldDatasStr appendString:[NSString stringWithFormat:@" where %@ = '%@'",key,oldDic[key]]];
             }
             else{
@@ -315,6 +314,24 @@ static DataBaseManager *manager = nil;
     
 }
 
+/*
+ select 字段名（*代表所有字段，如果有多个字段用英文的,分割） from 表名字 where 字段名=‘’ order by 字段名 desc|asc;
+ select 字段名 from 表名 where  属性 like '%关键字%';
+ select 字段名 from 表名 where 字段名 in ('关键字','关键字');
+
+ 1.
+ @[
+   @{"jid = text1@hsmdemacbook-pro.local"},
+   @{@"jid >= 1111"}
+   ]
+ 
+ 2.
+ "like text1"
+ 
+ 3.
+ "in text1,text2"
+ 
+ */
 -(FMResultSet *)queryDatasWhereConditionArray:(NSArray *)conditions FromTable:(NSString *)tableName forDB:(FMDatabase *)db withTpye:(NSString *)type {
     if (tableName == nil || tableName.length == 0) {
         return nil;
@@ -328,7 +345,6 @@ static DataBaseManager *manager = nil;
     
     
     NSMutableString *sql = [NSMutableString stringWithFormat:@"select * from %@ ",tableName];
-    NSMutableString *con = [[NSMutableString alloc] init];
 
     //无条件查询
     //and
@@ -347,66 +363,24 @@ static DataBaseManager *manager = nil;
     //not like
     //is null
     //is not null
-    if (conditions.count == 0) {
-        
-    }
-    else{
-        
+    if (conditions.count > 0) {
         if ([type isEqualToString:@"in"]){
             
         }
         else if ([type isEqualToString:@"like"]){
             
         }
-        else{
-            for (NSDictionary *dic in conditions) {
-                NSString *conKey = [dic allKeys][0];
-                NSString *conValue   = [dic allValues][0];
-                
-                [con appendString:@"where"];
-                
-                if ([conKey isEqualToString:@"and"]) {
-                    [con appendString:[NSString stringWithFormat: @" and %@",conValue]];
-                }
-                else if ([conKey isEqualToString:@"or"]) {
-                    [con appendString:[NSString stringWithFormat: @" or %@",conValue]];
-                    
-                }
-                else if ([conKey isEqualToString:@"not"]) {
-                    [con appendString:[NSString stringWithFormat: @" not %@",conValue]];
-                    
-                }
-                else if ([conKey isEqualToString:@">"]) {
-                    [con appendString:[NSString stringWithFormat: @" > %@",conValue]];
-                    
-                }
-                else if ([conKey isEqualToString:@"<"]) {
-                    [con appendString:[NSString stringWithFormat: @" < %@",conValue]];
-                    
-                }
-                else if ([conKey isEqualToString:@">="]) {
-                    [con appendString:[NSString stringWithFormat: @" >= %@",conValue]];
-                    
-                }
-                else if ([conKey isEqualToString:@"<="]) {
-                    [con appendString:[NSString stringWithFormat: @" <= %@",conValue]];
-                    
-                }
-                else if ([conKey isEqualToString:@"="]) {
-                    [con appendString:[NSString stringWithFormat: @" = %@",conValue]];
-                    
-                }
-                else if ([conKey isEqualToString:@"!="]) {
-                    [con appendString:[NSString stringWithFormat: @" != %@",conValue]];
-                    
-                }
-                else if ([conKey isEqualToString:@"<>"]) {
-                    [con appendString:[NSString stringWithFormat: @" <> %@",conValue]];
-                }
+        else if ([type isEqualToString:@"select"]){
+            
+            
+            [sql appendString:@"where "];
+            for (NSDictionary *con in conditions) {
+                [sql appendFormat:@"%@ = '%@'",[con allKeys][0],[con allValues][0]];
             }
         }
-      
+
     }
+
     
     
     DebugLog_DATABASE(@"query sql:%@",sql);

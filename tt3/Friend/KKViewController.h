@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface KKViewController : UIViewController
+@interface KKViewController : BaseViewController
 @property (weak, nonatomic) IBOutlet UITableView *tView;
 - (IBAction)Account:(id)sender;
 

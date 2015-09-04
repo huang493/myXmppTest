@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="27D-iz-mT1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="27D-iz-mT1">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -13,17 +14,36 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="chw-0d-dEo" kind="relationship" relationship="rootViewController" id="1vs-LZ-NBH"/>
+                        <segue destination="chw-0d-dEo" kind="relationship" relationship="rootViewController" id="3hv-6t-t84"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VuR-ko-ERj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2179" y="-427"/>
+            <point key="canvasLocation" x="-2721" y="-506"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="Ggr-eH-7o1">
+            <objects>
+                <viewController id="FdK-TJ-vDq" customClass="RootViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="c9O-VB-Cjp"/>
+                        <viewControllerLayoutGuide type="bottom" id="kIX-rg-ChJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8XC-UF-6in">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="p7m-mR-meB"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fP0-Ti-Rtv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2156" y="416"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="qDb-hv-qMv">
             <objects>
-                <viewController id="chw-0d-dEo" customClass="KKViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="KKViewController" id="chw-0d-dEo" customClass="KKViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pj8-e3-Gk6"/>
                         <viewControllerLayoutGuide type="bottom" id="rTU-rq-vz3"/>
@@ -34,7 +54,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="rfR-QG-Lmf">
                                 <rect key="frame" x="0.0" y="64" width="600" height="504"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -59,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RMf-NW-p2H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1320" y="-531"/>
+            <point key="canvasLocation" x="-1850" y="-506"/>
         </scene>
         <!--Login Controller-->
         <scene sceneID="8Qs-X4-kFv">
