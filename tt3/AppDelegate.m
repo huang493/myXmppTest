@@ -20,11 +20,36 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    _client = [[XMPPClient alloc] init];
     
+    //异常捕获处理
+    NSSetUncaughtExceptionHandler(&caughtExceptionHandler);
+    
+    //启动XMPPClient
+    _client = [[XMPPClient alloc] init];
+
     return YES;
 }
 
+void caughtExceptionHandler(NSException *exception){
+    
+    NSString *name = [exception name];
+    NSString *reason  =[exception reason];
+    NSArray  *stackSymbols = [exception callStackSymbols];
+    NSString *crashStr = [NSString stringWithFormat:@"\n%@ \n%@ \n%@ \n%@",
+                          @"===================异常信息===================",
+                          name,
+                          reason,
+                          [stackSymbols componentsJoinedByString:@"\n"]];
+    //打印
+    NSLog(@"%@",crashStr);
+    
+    //保存
+    NSDateFormatter *forr = [[NSDateFormatter alloc] init];
+    [forr setDateFormat:@"yyyyMMdd_HH:mm:ss"];
+    NSString *path = [NSString stringWithFormat:@"%@/Documents/CrashFile%@",NSHomeDirectory(),[forr stringFromDate:[NSDate date]]];
+    [crashStr writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    
+}
 
 #pragma -mark applicationDelegate////////////////////////////////
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -89,7 +89,7 @@
     NSData *imgData = [[NSData alloc] initWithBase64Encoding:_model.message];
     UIImage *img = [UIImage imageWithData:imgData];
     CGRect frame = _imgView.frame;
-    
+    frame.origin.y = 30;
     //大小调整
     CGSize size  = CGSizeZero;
     CGSize imgSize = CGSizeMake(img.size.width, img.size.height);
@@ -115,7 +115,7 @@
     //位置调整
     CGPoint point = CGPointZero;
     if(!_model.isme){
-        point.x = SCREENWIDTH - size.width - 8;
+        point.x = SCREENWIDTH - size.width - 48;
     }
     else{
         point.x = 48;
@@ -130,11 +130,11 @@
     //autolayout sizeclass 出现问题，手动修改
     UIImageView *showImgView = (UIImageView *)[self.contentView viewWithTag:kDequeueTag];
     if (!showImgView) {
-        showImgView = [[UIImageView alloc] initWithFrame:_imgView.frame];
+        showImgView = [[UIImageView alloc] initWithFrame:frame];
         showImgView.tag = kDequeueTag;
         [self.contentView addSubview:showImgView];
     }
-    showImgView.frame = _imgView.frame;
+    showImgView.frame = frame;
     showImgView.image = img;
     
 }

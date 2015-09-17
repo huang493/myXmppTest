@@ -76,6 +76,11 @@ enum XMPPRoomState
 	return self;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"roomjid:%@ myRoomjid:%@ myNickName:%@ join:%@", self.roomJID,self.myRoomJID,self.myNickname,self.isJoined?@"YES":@"NO"];
+}
+
 - (BOOL)activate:(XMPPStream *)aXmppStream
 {
 	if ([super activate:aXmppStream])

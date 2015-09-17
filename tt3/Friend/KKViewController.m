@@ -15,7 +15,7 @@
 #import "MBProgressHUD.h"
 #import "hintView.h"
 #import "DataBaseManager.h"
-
+#import "RoomViewController.h"
 
 @interface KKViewController ()<UITableViewDataSource,UITableViewDelegate,KKChatDelegate>
 {
@@ -23,6 +23,7 @@
     NSMutableArray *sectionTitles;
     NSMutableArray *onlineUsers;
     NSMutableArray *offlineUsers;
+    NSMutableArray *rooms;
     AppDelegate    *appDel;
     NSString       *currentUserID;
 }
@@ -37,6 +38,7 @@
         sectionTitles = [NSMutableArray array];
         onlineUsers   = [NSMutableArray array];
         offlineUsers  = [NSMutableArray array];
+        rooms = [NSMutableArray array];
         
     }
     return self;
@@ -59,7 +61,7 @@
     
     appDel = [self getDelegate];
     appDel.client.chatDelegate = self;
-
+#if 0 //好友列表调试
     DataBaseManager *manager = [DataBaseManager shareDataBaseManager];
     FMDatabase *db = [manager getDBWithPath:[Tools getCurrentUserDoucmentPath]];
     
@@ -72,6 +74,7 @@
     NSLog(@"friend  end   ----------------------------------------------------------------------------");
     
     [manager closeDB:db];
+#endif
     
 }
 -(void)loadFriendsFromLocal{
@@ -163,12 +166,28 @@
 
 -(void)setNav{
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriend:)];
+    UIButton *addFriendBtn = [UIButton  buttonWithType:UIButtonTypeRoundedRect];
+    addFriendBtn.frame = CGRectMake(0, 0, 60, 30);
+    [addFriendBtn setTitle:@"+Friend" forState:UIControlStateNormal];
+    addFriendBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [addFriendBtn addTarget:self action:@selector(addFriend:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *addFriend = [[UIBarButtonItem alloc] initWithCustomView:addFriendBtn];
+    
+    UIButton *addRoomBtn = [UIButton  buttonWithType:UIButtonTypeRoundedRect];
+    addRoomBtn.frame = CGRectMake(0, 0, 60, 30);
+    [addRoomBtn setTitle:@"+Room" forState:UIControlStateNormal];
+    addRoomBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [addRoomBtn addTarget:self action:@selector(addRoom:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *addRoom = [[UIBarButtonItem alloc] initWithCustomView:addRoomBtn];
+    
+    self.navigationItem.rightBarButtonItems = @[addRoom,addFriend];
     
 }
 -(void)setSectionTitles{
     [sectionTitles addObject:@"online friends"];
     [sectionTitles addObject:@"offline friends"];
+    [sectionTitles addObject:@"room"];
 }
 -(void)getSubscribed{
     XMPPRosterCoreDataStorage *rosterCoreDataStorage = [[XMPPRosterCoreDataStorage alloc] init];
@@ -181,7 +200,13 @@
     AddFriendViewController *addFirendVC = [[AddFriendViewController alloc] init];
     [self.navigationController pushViewController:addFirendVC animated:YES];
 }
-
+-(void)addRoom:(UIButton *)sender{
+#pragma -mark TODO:添加房间
+    
+    RoomViewController *roomVC = [[RoomViewController alloc] init];
+    [self.navigationController pushViewController:roomVC animated:YES];
+    
+}
 
 -(AppDelegate *)getDelegate
 {
@@ -199,6 +224,7 @@
     [self.navigationController pushViewController:loginVC animated:YES];
 }
 
+#pragma -mark KKChatDelegate
 //在线好友
 -(void)newBuddyOnline:(NSString *)buddyName{
     
@@ -216,6 +242,11 @@
     [offlineUsers addObject:buddyName];
     [self.tView reloadData];
     
+}
+
+-(void)joinRoom:(NSString *)roomName{
+    [rooms addObject:roomName];
+    [self.tView reloadData];
 }
 
 -(void)didDisconnect{
@@ -249,9 +280,13 @@
     if (section == 0) {
         return [onlineUsers count];
     }
-    else{
+    else if(section == 1){
         return [offlineUsers count];
     }
+    else {
+        return [rooms count];
+    }
+    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -262,9 +297,13 @@
         cell.textLabel.textColor = [UIColor blackColor];
 
     }
-    else{
+    else if(indexPath.section == 1){
         cell.textLabel.text = offlineUsers[indexPath.row];
         cell.textLabel.textColor = [UIColor grayColor];
+    }
+    else{
+        cell.textLabel.text = rooms[indexPath.row];
+        cell.textLabel.textColor = [UIColor blackColor];
     }
 
     return cell;

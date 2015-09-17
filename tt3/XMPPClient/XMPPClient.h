@@ -15,10 +15,10 @@
 
 #import "XMPPFramework.h"
 #import "XMPP.h"
-
 #import "KKMessageDelegate.h"
 #import "KKChatDelegate.h"
 #import "KKVcarDelegate.h"
+
 typedef enum {
     SubscriptionRequest = 0,
     

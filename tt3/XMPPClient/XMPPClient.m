@@ -21,6 +21,8 @@
 #import "ChatMessageModel.h"
 #import "FriendInfoModel.h"
 #import "PersionInfoModel.h"
+#import "XMPPRoomMemoryStorage.h"
+#import "RoomManager.h"
 
 @implementation XMPPClient
 @synthesize xmppStream;
@@ -32,11 +34,6 @@
     }
     return self;
 }
-
--(void)setupXMPPStream{
-    
-}
-
 
 
 -(void)postNotificationWith:(NotificationType)type andObject:(id) obj{
@@ -91,6 +88,40 @@
     });
     
 }
+
+-(void)setupReconnect{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        XMPPReconnect *reconnect = [[XMPPReconnect alloc] init];
+        reconnect.autoReconnect = YES;
+        [reconnect addDelegate:self delegateQueue:dispatch_get_main_queue()];
+        [reconnect activate:xmppStream];
+    });
+
+    
+}
+
+-(void)dicof{
+    NSString* server = DOMAINNAME;//@"chat.shakespeare.lit"; //or whatever the server address for muc is
+    XMPPJID *servrJID = [XMPPJID jidWithString:server];
+    XMPPIQ *iq = [XMPPIQ iqWithType:@"get" to:servrJID];
+    [iq addAttributeWithName:@"from" stringValue:[xmppStream myJID].bare];
+    NSXMLElement *query = [NSXMLElement elementWithName:@"query"];
+    [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
+    [iq addChild:query];
+    [xmppStream sendElement:iq];
+}
+
+-(void)setupRoom{
+
+    RoomManager *roomManager = [RoomManager shareRoomManager];
+    [roomManager createRoom:@"text2" andJoinNickName:@"my1"];
+//    [roomManager createRoom:@"text3" andJoinNickName:@"my2"];
+
+//    [roomManager getRoomInfoByRoomName:@"text2"];
+//    [roomManager destroyRoom:@"text"];
+}
+
 -(void)goOnline{
     XMPPPresence *presence = [XMPPPresence presence];
     [[self xmppStream] sendElement:presence];
@@ -107,7 +138,9 @@
     [self setupStream];
     [self setupRoster];//roster init 只能执行一次，不然就蹦，原因：未明。
     //        [self setupVCard];
-    NSLog(@"------------>>>Begin connect...");
+    [self setupReconnect];
+
+    NSLog(@"Begin connect...");
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *userId = [defaults stringForKey:@"userid"];
@@ -145,7 +178,7 @@
     [self setupStream];
 //    [self setupRoster];//roster init 只能执行一次，不然就蹦，原因：未明。
     //        [self setupVCard];
-    NSLog(@"------------>>>Begin anonymous connect...");
+    NSLog(@" Begin anonymous connect...");
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *server = [defaults stringForKey:@"server"];
@@ -181,7 +214,7 @@
 #pragma -mark  XMPPStreamDelegate-------------------------------
 //连接服务器
 - (void)xmppStreamDidConnect:(XMPPStream *)sender{
-    NSLog(@"------------>>>Connect OK");
+    NSLog(@" Connect OK");
     _isConect = YES;
     NSError *error = nil;
     if (![sender.myJID.user isEqualToString:@"anonymous"]) {
@@ -201,23 +234,27 @@
 
 
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error{
-    NSLog(@"xmppStreamDidDisconnect");
+//    NSLog(@"xmppStreamDidDisconnect");
 }
 
 
 //验证通过
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
     
-    NSLog(@"------------>>>Authenticate pass");
+    NSLog(@" Authenticate pass");
     NSNotificationCenter *noc = [NSNotificationCenter defaultCenter];
     [noc postNotificationName:@"AuthenticateResult" object:nil];
     
     [self goOnline];
+    [self dicof];
+
+    [self setupRoom];
+
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error{
     
-    NSLog(@"------------>>>Authenticate fail");
+    NSLog(@" Authenticate fail");
     NSLog(@"fial-jid:%@",sender.myJID);
     
     NSNotificationCenter *noc = [NSNotificationCenter defaultCenter];
@@ -238,13 +275,6 @@
 }
 
 
-- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
-    
-    
-        NSLog(@"------------>>>iq in:%@",iq);
-    
-    return YES;
-}
 
 //收到消息
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message{
@@ -274,34 +304,44 @@
     
     //取得好友状态
     NSString *presenceType = [presence type]; //online/offline
-    //当前用户
     NSString *userId = [[sender myJID] user];
-    //在线用户
     NSString *presenceFromUser = [[presence from] user];
     
+    //Room presence
+    NSString *conference = [[presence attributeForName:@"from"] stringValue];
+    if ([conference containsString:@"@conference"]) {
+        if ([_chatDelegate respondsToSelector:@selector(joinRoom:)]) {
+            [_chatDelegate joinRoom:conference];
+        }
+        return;
+    }
+    //friend or me presence
     if (![presenceFromUser isEqualToString:userId]) {
         
         //在线状态
         if ([presenceType isEqualToString:@"available"]) {
             
-            //用户列表委托(后面讲)
             [_chatDelegate newBuddyOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, DOMAINNAME]];
-            NSLog(@"------------>>>Friend online presence");
+            NSLog(@" Friend online presence");
         }else if ([presenceType isEqualToString:@"unavailable"]) {
-            //用户列表委托(后面讲)
             [_chatDelegate buddyWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, DOMAINNAME]];
-            NSLog(@"------------>>>Friend offine presence:%@",presenceFromUser);
+            NSLog(@" Friend offine presence:%@",presenceFromUser);
         }
     }
     else{
-        NSLog(@"------------>>>I'm (%@) online presence",userId);
+        NSLog(@" I'm (%@) online presence",userId);
     }
     
     
 }
+- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq{
+    
+    NSLog(@" iq in:%@",iq);
+    return YES;
+}
 
 - (void)xmppStream:(XMPPStream *)sender didSendIQ:(XMPPIQ *)iq{
-    NSLog(@"------------>>>iq out:%@",iq);
+//    NSLog(@" iq out:%@",iq);
 }
 
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message{
@@ -320,7 +360,7 @@
     //接受添加好友请求：acceptPresenceSubscriptionRequestFrom:
     //拒接添加好友请求：rejectPresenceSubscriptionRequestFrom:
     
-    NSLog(@"------------>>>ask subscribe come from:%@",[presence from]);
+    NSLog(@" ask subscribe come from:%@",[presence from]);
     NSDictionary *objDic = [NSDictionary dictionaryWithObjectsAndKeys:sender,@"XMPPRoster",presence,@"XMPPPresence", nil];
     NSNotificationCenter *noc  = [NSNotificationCenter defaultCenter];
     [noc postNotificationName:@"ReceiveSubscriptionRequest" object:objDic];
@@ -329,7 +369,7 @@
 
 - (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterItem:(NSXMLElement *)item{
     
-    NSLog(@"------------>>>receive rosterItem:%@",item);
+//    NSLog(@" receive rosterItem:%@",item);
     DataBaseManager *manager = [DataBaseManager shareDataBaseManager];
     FMDatabase *db = [manager createDBWithPath:[NSString stringWithFormat:@"%@",[Tools getCurrentUserDoucmentPath]]];
     FriendInfoModel *model = [FriendInfoModel setFriendInfoModelWith:item];
@@ -348,15 +388,15 @@
 }
 
 - (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterPush:(XMPPIQ *)iq{
-    NSLog(@"------------>>>receive push:%@",iq);
+    NSLog(@" receive push:%@",iq);
 }
 
 
-#pragma -mark XMPPvCardTempModuleDelegate
+#pragma -mark XMPPvCardTempModuleDelegate-------------------------------
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule
         didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
                      forJID:(XMPPJID *)jid{
-    NSLog(@"------------>>>receive vCard:%@",vCardTemp);
+    NSLog(@" receive vCard:%@",vCardTemp);
     //保存我的个人资料
     if ([jid isEqualToJID:xmppStream.myJID options:XMPPJIDCompareUser|XMPPJIDCompareDomain]) {
         //更新本地UserInfo
@@ -412,6 +452,72 @@
     }
 }
 
+#pragma -mark XMPPReconnectDelegate-------------------------------
+- (void)xmppReconnect:(XMPPReconnect *)sender didDetectAccidentalDisconnect:(SCNetworkConnectionFlags)connectionFlags{
+    NSLog(@" Disconnect:%@",sender);
+
+}
+- (BOOL)xmppReconnect:(XMPPReconnect *)sender shouldAttemptAutoReconnect:(SCNetworkConnectionFlags)connectionFlags{
+    NSLog(@" should attempt reconnect:%@",sender);
+    return YES;
+}
+
+#pragma -mark XMPPRoomDelegate-------------------------------
+- (void)xmppRoomDidCreate:(XMPPRoom *)sender{
+    NSLog(@"create room success :%@",sender);
+    
+
+    RoomManager *manager = [RoomManager shareRoomManager];
+    [manager getRoomInfoByRoomJID:sender.roomJID];
+//    [manager defalutConfigForRoomJID:sender.roomJID];
+
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm{
+//    RoomManager *manager = [RoomManager shareRoomManager];
+//    [manager getRoomInfoByRoomName:@"text2"];
+//    [manager invite:@"text3" intoRoom:@"text2"];
+    NSLog(@"------》》。。。。%s:%@",__FUNCTION__,sender);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender willSendConfiguration:(XMPPIQ *)roomConfigForm{
+    NSLog(@"------》》。。。。%s:%@",__FUNCTION__,sender);
+    
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didConfigure:(XMPPIQ *)iqResult{
+    NSLog(@"room:%@ config success:%@",sender.roomJID,iqResult);
+}
+- (void)xmppRoom:(XMPPRoom *)sender didNotConfigure:(XMPPIQ *)iqResult{
+    NSLog(@"room:%@ config fail:%@",sender.roomJID,iqResult);
+}
+
+- (void)xmppRoomDidJoin:(XMPPRoom *)sender{
+
+    NSLog(@"join room %@  %@",sender.myRoomJID,sender.roomJID);
+}
+
+- (void)xmppRoomDidLeave:(XMPPRoom *)sender{
+    NSLog(@"leave room %@ %@",sender.myRoomJID,sender.roomJID);
+}
+
+- (void)xmppRoomDidDestroy:(XMPPRoom *)sender{
+    NSLog(@"------》》。。。。%s:%@",__FUNCTION__,sender);
+}
+- (void)xmppRoom:(XMPPRoom *)sender didFailToDestroy:(XMPPIQ *)iqError{
+    NSLog(@"------》》。。。。%s:%@",__FUNCTION__,sender);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender occupantDidJoin:(XMPPJID *)occupantJID withPresence:(XMPPPresence *)presence{
+    NSLog(@"------》》。。。。%s:%@",__FUNCTION__,sender);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID withPresence:(XMPPPresence *)presence{
+    NSLog(@"------》》。。。。%s:%@",__FUNCTION__,sender);
+}
+- (void)xmppRoom:(XMPPRoom *)sender occupantDidUpdate:(XMPPJID *)occupantJID withPresence:(XMPPPresence *)presence{
+    NSLog(@"------》》。。。。%s:%@",__FUNCTION__,sender);
+}
 
 
 

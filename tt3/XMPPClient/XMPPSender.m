@@ -11,7 +11,6 @@
 #import "DataBaseManager.h"
 #import "AppDelegate.h"
 #import "XMPPFileTransfer.h"
-#import "XMPP"
 
 
 @implementation XMPPSender

@@ -66,10 +66,10 @@ static DataBaseManager *manager = nil;
     
     _db = [[FMDatabase alloc] initWithPath:[NSString stringWithFormat:@"%@/%@",path,@"Message.db"]];
     if ([_db open]) {
-        NSLog(@"db create success");
+        DebugLog_DATABASE(@"db create success");
     }
     else{
-        NSLog(@"db create fail");
+        DebugLog_DATABASE(@"db create fail");
     }
     
     return _db;

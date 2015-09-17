@@ -22,14 +22,14 @@
                         <rect key="frame" x="8" y="8" width="307" height="16"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7OA-0r-UtU">
                         <rect key="frame" x="57" y="27" width="255" height="20"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -39,7 +39,7 @@
                 <outlet property="senderImgView" destination="GI7-vo-Q4J" id="UPR-1g-sN1"/>
                 <outlet property="timeLabel" destination="d89-kX-uA9" id="KaB-TU-s0r"/>
             </connections>
-            <point key="canvasLocation" x="1218" y="456"/>
+            <point key="canvasLocation" x="1046" y="432"/>
         </tableViewCell>
     </objects>
 </document>

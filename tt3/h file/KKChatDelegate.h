@@ -10,6 +10,7 @@
 
 -(void)newBuddyOnline:(NSString*) buddyName;
 -(void)buddyWentOffline:(NSString *) buddyName;
+-(void)joinRoom:(NSString *)roomName;
 -(void)didDisconnect;
 
 

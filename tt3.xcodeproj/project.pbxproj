@@ -72,6 +72,7 @@
 		188B79531B5E1E28009742FD /* 使用注意事项.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 188B794D1B5E1E28009742FD /* 使用注意事项.rtf */; };
 		188B79571B5E1F30009742FD /* DataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188B79561B5E1F30009742FD /* DataBaseManager.m */; };
 		188B795D1B5E6B32009742FD /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 188B795C1B5E6B32009742FD /* libsqlite3.0.dylib */; };
+		18A5666C1BA94B1000557BEA /* RoomManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A5666B1BA94B1000557BEA /* RoomManager.m */; };
 		18A975DA1B57A0AF00C010C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A975D91B57A0AF00C010C9 /* main.m */; };
 		18A975DD1B57A0AF00C010C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A975DC1B57A0AF00C010C9 /* AppDelegate.m */; };
 		18A975E31B57A0AF00C010C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18A975E11B57A0AF00C010C9 /* Main.storyboard */; };
@@ -82,7 +83,6 @@
 		18BBC35D1B8FFB150001D4A3 /* UnReadBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BBC35C1B8FFB150001D4A3 /* UnReadBubbleView.m */; };
 		18BBC3651B9007610001D4A3 /* XMPPReceiveAndNotificate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BBC3641B9007610001D4A3 /* XMPPReceiveAndNotificate.m */; };
 		18BBC36C1B90085C0001D4A3 /* XMPPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BBC36B1B90085C0001D4A3 /* XMPPClient.m */; };
-		18BBC3731B9034D40001D4A3 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BBC3721B9034D40001D4A3 /* RootViewController.m */; };
 		18BBC3761B903B120001D4A3 /* XMPPContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BBC3751B903B120001D4A3 /* XMPPContext.m */; };
 		18BBC3791B903B290001D4A3 /* XMPPSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BBC3781B903B290001D4A3 /* XMPPSender.m */; };
 		18DF237D1B71AD1A002FA886 /* ChatCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF23761B71AD1A002FA886 /* ChatCellTableViewCell.m */; };
@@ -215,6 +215,8 @@
 		18DF24A81B71AD5C002FA886 /* SectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF24A41B71AD5C002FA886 /* SectionView.m */; };
 		18DF24A91B71AD5C002FA886 /* sendMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF24A61B71AD5C002FA886 /* sendMessageView.m */; };
 		18E29B5F1B85A68800474EF9 /* PersionInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E29B5E1B85A68800474EF9 /* PersionInfoModel.m */; };
+		18F2652D1BAA9B2C009B7BFF /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F2652B1BAA9B2C009B7BFF /* RoomViewController.m */; };
+		18F2652E1BAA9B2C009B7BFF /* RoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F2652C1BAA9B2C009B7BFF /* RoomViewController.xib */; };
 		756246421B8812C5001104B8 /* ResgistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 756246401B8812C5001104B8 /* ResgistViewController.m */; };
 		756246431B8812C5001104B8 /* ResgistViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 756246411B8812C5001104B8 /* ResgistViewController.xib */; };
 		75E957A61B97D92F00210989 /* ChartImageCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E957A41B97D92F00210989 /* ChartImageCellTableViewCell.m */; };
@@ -458,6 +460,8 @@
 		188B79551B5E1F30009742FD /* DataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBaseManager.h; sourceTree = "<group>"; };
 		188B79561B5E1F30009742FD /* DataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseManager.m; sourceTree = "<group>"; };
 		188B795C1B5E6B32009742FD /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		18A5666A1BA94B1000557BEA /* RoomManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomManager.h; sourceTree = "<group>"; };
+		18A5666B1BA94B1000557BEA /* RoomManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomManager.m; sourceTree = "<group>"; };
 		18A975D41B57A0AF00C010C9 /* tt3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tt3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18A975D81B57A0AF00C010C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18A975D91B57A0AF00C010C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -477,8 +481,6 @@
 		18BBC3641B9007610001D4A3 /* XMPPReceiveAndNotificate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPReceiveAndNotificate.m; sourceTree = "<group>"; };
 		18BBC36A1B90085C0001D4A3 /* XMPPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPClient.h; sourceTree = "<group>"; };
 		18BBC36B1B90085C0001D4A3 /* XMPPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPClient.m; sourceTree = "<group>"; };
-		18BBC3711B9034D40001D4A3 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		18BBC3721B9034D40001D4A3 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		18BBC3741B903B120001D4A3 /* XMPPContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPContext.h; sourceTree = "<group>"; };
 		18BBC3751B903B120001D4A3 /* XMPPContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPContext.m; sourceTree = "<group>"; };
 		18BBC3771B903B290001D4A3 /* XMPPSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPSender.h; sourceTree = "<group>"; };
@@ -629,6 +631,9 @@
 		18DF24A61B71AD5C002FA886 /* sendMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sendMessageView.m; sourceTree = "<group>"; };
 		18E29B5D1B85A68800474EF9 /* PersionInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersionInfoModel.h; sourceTree = "<group>"; };
 		18E29B5E1B85A68800474EF9 /* PersionInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersionInfoModel.m; sourceTree = "<group>"; };
+		18F2652A1BAA9B2C009B7BFF /* RoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomViewController.h; sourceTree = "<group>"; };
+		18F2652B1BAA9B2C009B7BFF /* RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomViewController.m; sourceTree = "<group>"; };
+		18F2652C1BAA9B2C009B7BFF /* RoomViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoomViewController.xib; sourceTree = "<group>"; };
 		7562463F1B8812C5001104B8 /* ResgistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResgistViewController.h; sourceTree = "<group>"; };
 		756246401B8812C5001104B8 /* ResgistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResgistViewController.m; sourceTree = "<group>"; };
 		756246411B8812C5001104B8 /* ResgistViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResgistViewController.xib; sourceTree = "<group>"; };
@@ -1179,13 +1184,33 @@
 			path = dataBaseManger;
 			sourceTree = "<group>";
 		};
-		18A975CB1B57A0AF00C010C9 = {
+		18A566691BA94AAC00557BEA /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				18F2652A1BAA9B2C009B7BFF /* RoomViewController.h */,
+				18F2652B1BAA9B2C009B7BFF /* RoomViewController.m */,
+				18F2652C1BAA9B2C009B7BFF /* RoomViewController.xib */,
+				18A5666A1BA94B1000557BEA /* RoomManager.h */,
+				18A5666B1BA94B1000557BEA /* RoomManager.m */,
+			);
+			path = Room;
+			sourceTree = "<group>";
+		};
+		18A5666D1BA94B2600557BEA /* Vender */ = {
 			isa = PBXGroup;
 			children = (
 				18B971331B5F7CE0006D26EE /* MBProgressHUD */,
 				188B79411B5E1E28009742FD /* fmdb */,
 				759363DE1B5936E400E6C91A /* systemFrameWork */,
 				1866AD561B5897DA005BAD80 /* xmppFrameWork */,
+			);
+			name = Vender;
+			sourceTree = "<group>";
+		};
+		18A975CB1B57A0AF00C010C9 = {
+			isa = PBXGroup;
+			children = (
+				18A5666D1BA94B2600557BEA /* Vender */,
 				18A975D61B57A0AF00C010C9 /* tt3 */,
 				18A975F01B57A0AF00C010C9 /* tt3Tests */,
 				18A975D51B57A0AF00C010C9 /* Products */,
@@ -1204,6 +1229,7 @@
 		18A975D61B57A0AF00C010C9 /* tt3 */ = {
 			isa = PBXGroup;
 			children = (
+				18A566691BA94AAC00557BEA /* Room */,
 				18BBC3691B90085C0001D4A3 /* XMPPClient */,
 				18BBC3621B9007610001D4A3 /* XMPPReceiveAndNotificate */,
 				18BBC35A1B8FFB150001D4A3 /* UnReadBubbleView */,
@@ -1220,8 +1246,6 @@
 				18A975DC1B57A0AF00C010C9 /* AppDelegate.m */,
 				188436F31B846280006C1E78 /* BaseViewController.h */,
 				188436F41B846280006C1E78 /* BaseViewController.m */,
-				18BBC3711B9034D40001D4A3 /* RootViewController.h */,
-				18BBC3721B9034D40001D4A3 /* RootViewController.m */,
 				1869258B1B60846600AFA564 /* Tools.h */,
 				1869258C1B60846600AFA564 /* Tools.m */,
 				18A975E11B57A0AF00C010C9 /* Main.storyboard */,
@@ -2342,6 +2366,7 @@
 				18DF24421B71AD48002FA886 /* [@pic026]@2x.png in Resources */,
 				1866ADED1B5897DA005BAD80 /* README.txt in Resources */,
 				18DF24711B71AD48002FA886 /* [@004]@2x.png in Resources */,
+				18F2652E1BAA9B2C009B7BFF /* RoomViewController.xib in Resources */,
 				188B79531B5E1E28009742FD /* 使用注意事项.rtf in Resources */,
 				18DF237E1B71AD1A002FA886 /* ChatCellTableViewCell.xib in Resources */,
 				18DF242A1B71AD48002FA886 /* [@pic065]@2x.png in Resources */,
@@ -2440,6 +2465,7 @@
 				18BBC35D1B8FFB150001D4A3 /* UnReadBubbleView.m in Sources */,
 				75E97D8F1B5A308A0023B61B /* XMPPTransports.m in Sources */,
 				75E97D981B5A308A0023B61B /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
+				18F2652D1BAA9B2C009B7BFF /* RoomViewController.m in Sources */,
 				75E97D951B5A308A0023B61B /* XMPPCapabilities.m in Sources */,
 				1866ADF11B5897DA005BAD80 /* DDXMLNode.m in Sources */,
 				18DF24A71B71AD5C002FA886 /* EmotionView.m in Sources */,
@@ -2463,6 +2489,7 @@
 				75E97D561B5A308A0023B61B /* XMPPProcessOne.m in Sources */,
 				75E97D841B5A308A0023B61B /* XMPPResultSet.m in Sources */,
 				1866ADDD1B5897DA005BAD80 /* DDList.m in Sources */,
+				18A5666C1BA94B1000557BEA /* RoomManager.m in Sources */,
 				75E97D971B5A308A0023B61B /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				756246421B8812C5001104B8 /* ResgistViewController.m in Sources */,
 				75E97D881B5A308A0023B61B /* XMPPIQ+XEP_0066.m in Sources */,
@@ -2549,7 +2576,6 @@
 				1866ADCF1B5897DA005BAD80 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				18DF239C1B71AD35002FA886 /* FriendInfoModel.m in Sources */,
 				75E97D9E1B5A308A0023B61B /* XMPPPresence+XEP_0172.m in Sources */,
-				18BBC3731B9034D40001D4A3 /* RootViewController.m in Sources */,
 				75E97D5F1B5A308A0023B61B /* XMPPUserMemoryStorageObject.m in Sources */,
 				75E97D6C1B5A308A0023B61B /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				75E97DA91B5A308A0023B61B /* NSXMLElement+XEP_0203.m in Sources */,
@@ -2703,6 +2729,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -2719,6 +2746,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -2726,6 +2754,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
