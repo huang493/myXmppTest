@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "XMPPFramework.h"
+
+
+
+
 @interface RoomManager : NSObject
+
 
 
 +(RoomManager *)shareRoomManager;
@@ -29,5 +34,8 @@
 
 -(void)defalutConfigForRoomName:(NSString *)roomName;
 -(void)defalutConfigForRoomJID:(XMPPJID *)roomJID;
+
+
+
 
 @end

@@ -101,26 +101,6 @@
     
 }
 
--(void)dicof{
-    NSString* server = DOMAINNAME;//@"chat.shakespeare.lit"; //or whatever the server address for muc is
-    XMPPJID *servrJID = [XMPPJID jidWithString:server];
-    XMPPIQ *iq = [XMPPIQ iqWithType:@"get" to:servrJID];
-    [iq addAttributeWithName:@"from" stringValue:[xmppStream myJID].bare];
-    NSXMLElement *query = [NSXMLElement elementWithName:@"query"];
-    [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
-    [iq addChild:query];
-    [xmppStream sendElement:iq];
-}
-
--(void)setupRoom{
-
-    RoomManager *roomManager = [RoomManager shareRoomManager];
-    [roomManager createRoom:@"text2" andJoinNickName:@"my1"];
-//    [roomManager createRoom:@"text3" andJoinNickName:@"my2"];
-
-//    [roomManager getRoomInfoByRoomName:@"text2"];
-//    [roomManager destroyRoom:@"text"];
-}
 
 -(void)goOnline{
     XMPPPresence *presence = [XMPPPresence presence];
@@ -462,6 +442,27 @@
     return YES;
 }
 
+-(void)dicof{
+    NSString* server = DOMAINNAME;//@"chat.shakespeare.lit"; //or whatever the server address for muc is
+    XMPPJID *servrJID = [XMPPJID jidWithString:server];
+    XMPPIQ *iq = [XMPPIQ iqWithType:@"get" to:servrJID];
+    [iq addAttributeWithName:@"from" stringValue:[xmppStream myJID].bare];
+    NSXMLElement *query = [NSXMLElement elementWithName:@"query"];
+    [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
+    [iq addChild:query];
+    [xmppStream sendElement:iq];
+}
+
+-(void)setupRoom{
+    
+    RoomManager *roomManager = [RoomManager shareRoomManager];
+//    [roomManager createRoom:@"room" andJoinNickName:@"my1"];
+    //    [roomManager createRoom:@"text3" andJoinNickName:@"my2"];
+    
+        [roomManager getRoomInfoByRoomName:@"room"];
+    //    [roomManager destroyRoom:@"text"];
+}
+
 #pragma -mark XMPPRoomDelegate-------------------------------
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender{
     NSLog(@"create room success :%@",sender);
@@ -469,7 +470,7 @@
 
     RoomManager *manager = [RoomManager shareRoomManager];
     [manager getRoomInfoByRoomJID:sender.roomJID];
-//    [manager defalutConfigForRoomJID:sender.roomJID];
+    [manager defalutConfigForRoomJID:sender.roomJID];
 
 }
 
@@ -486,6 +487,8 @@
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didConfigure:(XMPPIQ *)iqResult{
+    RoomManager *manager = [RoomManager shareRoomManager];
+    [manager getRoomInfoByRoomJID:sender.roomJID];
     NSLog(@"room:%@ config success:%@",sender.roomJID,iqResult);
 }
 - (void)xmppRoom:(XMPPRoom *)sender didNotConfigure:(XMPPIQ *)iqResult{

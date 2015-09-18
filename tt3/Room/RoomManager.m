@@ -10,6 +10,40 @@
 #import "XMPPRoomMemoryStorage.h"
 #import "AppDelegate.h"
 
+typedef enum {
+    
+    Maxusers5 = 1,
+    Maxusers10,
+    Maxusers20,
+    Maxusers30,
+    Maxusers50,
+    Maxusers100,
+    Maxusers200
+    
+} RoomconfigMaxusers;
+
+typedef enum {
+   ModeratorsKnowWhois = 1,
+   AnyoneKnowWhois
+} RoomconfigWhois;
+
+typedef enum {
+    NobodyPrivateMessage = 1,
+    ModeratorsOnlyPrivateMessage,
+    AnyonePrivateMessage
+} AllowPrivateMessagesFromVisitors;
+
+typedef enum {
+    
+    KNSInteger = 1,
+    KNSString = 2,
+    KBOOL = 3
+    
+} CreateElementType;
+
+
+
+
 @implementation RoomManager
 
 static RoomManager *manager;
@@ -40,6 +74,45 @@ static RoomManager *manager;
     XMPPRoom *room = [self  getRoomByName:name];
     [room destroyRoom];
 }
+
+
+-(void)configRoomWithroomconfig_roomname:(NSString *)roomconfig_roomname
+                        isPersistentroom:(BOOL)isPersistentroom
+                     roomconfig_roomdesc:(NSString *)roomconfig_roomdesc
+             isRoomconfig_persistentroom:(BOOL)isRoomconfig_persistentroom
+                 isRoomconfig_publicroom:(BOOL)isRoomconfig_publicroom
+      isRoomconfig_passwordprotectedroom:(BOOL)isRoomconfig_passwordprotectedroom
+                   roomconfig_roomsecret:(NSString *)roomconfig_roomsecret
+                     roomconfig_maxusers:(RoomconfigMaxusers )roomconfig_maxusers
+                        roomconfig_whois:(RoomconfigWhois)roomconfig_whois
+                isRoomconfig_membersonly:(BOOL)isRoomconfig_membersonly
+              isRoomconfig_moderatedroom:(BOOL)isRoomconfig_moderatedroom
+                      members_by_default:(BOOL) isMembers_by_default
+              isRoomconfig_changesubject:(BOOL) isRoomconfig_changesubject
+                isAllow_private_messages:(BOOL)isAllow_private_messages
+    allow_private_messages_from_visitors:(AllowPrivateMessagesFromVisitors)allow_private_messages_from_visitors
+                     isAllow_query_users:(BOOL)isAllow_query_users
+               isRoomconfig_allowinvites:(BOOL)isRoomconfig_allowinvites
+         isRoomconfig_allowvisitorstatus:(BOOL)isRoomconfig_allowvisitorstatus
+     isRoomconfig_allowvisitornickchange:(BOOL)isRoomconfig_allowvisitornickchange
+         isRoomconfig_allowvoicerequests:(BOOL)isRoomconfig_allowvoicerequests
+      roomconfig_voicerequestmininterval:(NSString *)roomconfig_voicerequestmininterval
+             roomconfig_captcha_whitelis:(id)roomconfig_captcha_whitelis
+                         isDefaultConfig:(BOOL)isDefaultConfig{
+    
+    if (!isDefaultConfig) {
+        NSXMLElement *x = [NSXMLElement elementWithName:@"x" xmlns:@"jabber:x:data"];
+        NSXMLElement *roomName = [self createElement:@"muc#roomconfig_roomname" Value:roomconfig_roomname valueType:KNSString];
+        NSXMLElement *roomDesc = [self createElement:@"muc#roomconfig_roomdesc" Value:roomconfig_roomdesc valueType:KNSString];
+        NSXMLElement *persistentroom = [self createElement:@"muc#roomconfig_persistentroom" Value:isRoomconfig_persistentroom valueType:KBOOL];
+        NSXMLElement *
+        
+    }
+}
+
+
+
+
 
 -(void)getRoomInfoByRoomName:(NSString *)name{
     
@@ -107,6 +180,46 @@ static RoomManager *manager;
     [xmppRoom addDelegate:appdele.client delegateQueue:dispatch_get_main_queue()];
     
     return xmppRoom;
+}
+
+-(NSXMLElement *)createElement:(NSString *)name Value:(id) value valueType:(CreateElementType)type{
+    NSXMLElement *varElement = [NSXMLElement elementWithName:@"var" stringValue:name];
+    NSXMLElement *valueElement = nil;
+    
+    
+    if ([value isKindOfClass:[NSString class]]) {
+        
+    }
+    
+    if (value) {
+        <#statements#>
+    }
+    
+    
+    
+    switch (type) {
+        case KNSInteger:
+        {
+            valueElement = [NSXMLElement elementWithName:@"value" numberValue:value];
+        }
+            break;
+        case KBOOL:
+        {
+            valueElement = [NSXMLElement elementWithName:@"value" numberValue:value];
+        }
+            break;
+        case KNSString:
+        {
+            valueElement = [NSXMLElement elementWithName:@"value" stringValue:value];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    [varElement addChild:valueElement];
+    return varElement;
 }
 
 @end
