@@ -17,6 +17,7 @@
 
 +(NSString *)getCurrentUserId;
 
+
 +(BOOL)checkVaild:(id) obj withType:(NSCLASSENUM)type;
 
 +(CGFloat)getHighOfString:(NSString *)str andSize:(CGSize)size andFont:(UIFont*)font;

@@ -76,7 +76,7 @@
     
     FriendInfoModel *model = [[FriendInfoModel alloc] init];
     model.subscription = [item attributeStringValueForName:@"subscription"];
-    model.jid = [item attributeStringValueForName:@"jid"];
+    model.ID = [item attributeStringValueForName:@"jid"];
     
     return model;
 }
@@ -111,6 +111,12 @@
         model.nickName = [set stringForColumn:@"nickName"];
         XMPPJID *jidd = [XMPPJID jidWithString:jid];
         model.photo = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.png",path,[jidd user]]];
+        model.group = [set stringForColumn:@"groupName"];
+        model.gender = [set boolForColumn:@"gender"];
+        model.subscription = [set stringForColumn:@"subscription"];
+        model.bday = [set stringForColumn:@"bday"];
+        model.tell =[set stringForColumn:@"adrStreet"];
+        model.adrStreet =[set stringForColumn:@"tell"];
         return model;
     }
     else{
@@ -118,11 +124,40 @@
     }
 }
 
++(NSMutableArray *)loadAllFrendsFromLocal{
+    NSMutableArray *arr = [NSMutableArray array];
+    NSString *path = [Tools getCurrentUserDoucmentPath];
+    DataBaseManager *dbManager = [DataBaseManager shareDataBaseManager];
+    FMDatabase *db = [dbManager getDBWithPath:[NSString stringWithFormat:@"%@",[Tools getCurrentUserDoucmentPath]]];
+    FMResultSet *set = [dbManager queryAllDatasFromTable:@"friends" forDB:db];
+    
+    while (set.next) {
+        FriendInfoModel *model = [[FriendInfoModel alloc] init];
+        model.ID = [set stringForColumn:@"jid"];
+        model.nickName = [set stringForColumn:@"nickName"];
+        XMPPJID *jid = [XMPPJID jidWithString:model.ID];
+        model.photo = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.png",path,jid.user]];
+        if (model.photo.length==0) {
+            model.photo = UIImageJPEGRepresentation([UIImage imageNamed:@"3"], 1);
+        }
+        model.group = [set stringForColumn:@"groupName"];
+        model.gender = [set boolForColumn:@"gender"];
+        model.subscription = [set stringForColumn:@"subscription"];
+        model.bday = [set stringForColumn:@"bday"];
+        model.tell =[set stringForColumn:@"adrStreet"];
+        model.adrStreet =[set stringForColumn:@"tell"];
+        
+        [arr addObject:model];
+    }
+    [set close];
+    return arr;
+}
+
 -(NSDictionary *)createAndCheck{
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
-    if ([Tools checkVaild:_jid withType:NSSTRING]) {
-        [dic setObject:_jid forKey:@"jid"];
+    if ([Tools checkVaild:_ID withType:NSSTRING]) {
+        [dic setObject:_ID forKey:@"jid"];
     }
     
     if ([Tools checkVaild:_nickName withType:NSSTRING]) {
@@ -158,7 +193,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"jid:%@ nickName:%@", _jid,_nickName];
+    return [NSString stringWithFormat:@"jid:%@ nickName:%@", _ID,_nickName];
 }
 
 @end

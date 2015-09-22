@@ -13,7 +13,7 @@
 
 @interface XMPPSender : NSObject
 
-+ (ChatMessageModel *)sendMessage:(NSString *)message andData:(NSData *)data withType:(enum MessageType)type to:(NSString *)to;
++ (ChatMessageModel *)sendMessage:(NSString *)message andData:(NSData *)data withBodyType:(enum MessageType)bodyType1 to:(NSString *)to;
 
 +(void)sendIq;
 @end

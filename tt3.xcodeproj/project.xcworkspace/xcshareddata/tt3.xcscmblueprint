@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F0669E0C578DBA10842490C3E1E8123ECB62D0C5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "a1d80723-e3aa-4402-b4be-16327ce7548e++2109" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F0669E0C578DBA10842490C3E1E8123ECB62D0C5" : 0,
+    "a1d80723-e3aa-4402-b4be-16327ce7548e++2109" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "8C995EFE-B442-4F16-A731-04C8B3AB59AF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F0669E0C578DBA10842490C3E1E8123ECB62D0C5" : "tt30727\/",
+    "a1d80723-e3aa-4402-b4be-16327ce7548e++2109" : "tt30727\/tt3\/images\/emotion\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "tt3",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "tt3.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/huang493\/myXmppTest.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F0669E0C578DBA10842490C3E1E8123ECB62D0C5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/svnserver\/svn\/golo",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "a1d80723-e3aa-4402-b4be-16327ce7548e++2109"
+    }
+  ]
+}

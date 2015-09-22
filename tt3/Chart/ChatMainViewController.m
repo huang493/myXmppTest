@@ -1,12 +1,12 @@
 //
-//  KKChatController.m
+//  ChatMainViewController.m
 //  tt3
 //
 //  Created by apple on 15/7/17.
 //  Copyright (c) 2015年 apple. All rights reserved.
 //
 
-#import "KKChatController.h"
+#import "ChatMainViewController.h"
 #import "ChatCellTableViewCell.h"
 #import "ChartImageCellTableViewCell.h"
 #import "sendMessageView.h"
@@ -23,7 +23,7 @@
 #import "FriendInfoModel.h"
 
 
-@interface KKChatController ()<UITableViewDelegate,UITableViewDataSource,KKMessageDelegate>
+@interface ChatMainViewController ()<UITableViewDelegate,UITableViewDataSource,KKMessageDelegate>
 {
     NSMutableArray  *messages;
     AppDelegate     *appDel;
@@ -36,7 +36,7 @@
 }
 @end
 
-@implementation KKChatController
+@implementation ChatMainViewController
 
 -(void)viewWillAppear:(BOOL)animated{
     [_tView reloadData];
@@ -111,7 +111,7 @@
     NSLog(@"chart history strat ----------------------------------------------------------------------------");
     while (res.next) {
         
-        NSLog(@"time:%@ text:%@ from:%@",[res stringForColumn:@"time"],[res stringForColumn:@"message"],[res stringForColumn:@"messageFrom"]);
+        NSLog(@"time:%@ text:%@ from:%@ to:%@",[res stringForColumn:@"time"],[res stringForColumn:@"message"],[res stringForColumn:@"messageFrom"],[res stringForColumn:@"messageTo"]);
     }
     NSLog(@"chart history end   ----------------------------------------------------------------------------");
 
@@ -121,10 +121,9 @@
 
 -(void)addSendView
 {
-    __weak KKChatController *weafSef = self;
+    __weak ChatMainViewController *weafSef = self;
     sendView = [[sendMessageView alloc] initWithFrame:CGRectMake(0, SCREENHEIGH - 40, SCREENWIDTH, 40)];
     sendView.clickBlock = ^(NSString * message,NSData *data,enum MessageType type){
-        NSLog(@"message:%@",message);
         [weafSef sendMessage:message andData:(NSData *)data withType:type];
     };
     sendView.chanegeHiBlock = ^(CGFloat heigh){
@@ -192,7 +191,7 @@
         ChatCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:idenfitif forIndexPath:indexPath];
         
         [cell loadDatasFromChatMessageModel:model];
-        KKChatController *weakSelf = self;
+        ChatMainViewController *weakSelf = self;
         cell.imgClickBlock = ^(NSString *messageFrom){
             PersionInfoViewController *persionVC = [[PersionInfoViewController alloc] init];
             persionVC.messageFrom = messageFrom;
@@ -217,7 +216,7 @@
         idenfitif = @"chatImageCell";
         ChartImageCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:idenfitif forIndexPath:indexPath];
         [cell loadFromChartMessageModel:model];
-        KKChatController *weakSelf = self;
+        ChatMainViewController *weakSelf = self;
         cell.imgClickBlock = ^(NSString *messageFrom){
             PersionInfoViewController *persionVC = [[PersionInfoViewController alloc] init];
             persionVC.messageFrom = messageFrom;
@@ -257,7 +256,7 @@
 #pragma -mark xmpp 发送消息-----
 - (void)sendMessage:(NSString *)message andData:(NSData *)data withType:(enum MessageType)type{
     
-    ChatMessageModel *model = [XMPPSender sendMessage:message andData:data withType:type to:_chatWithUser];
+    ChatMessageModel *model = [XMPPSender sendMessage:message andData:data withBodyType:type to:_chatWithUser];
 //    [XMPPSender sendIq];
     if (model) {
         //更新UI

@@ -44,6 +44,12 @@
  */
 -(void)setMessageWithNSXMLElement:(NSXMLElement *) mes;
 
+/**
+ *  取本地数据库的模型设置
+ *
+ *  @param set 数据库Item
+ */
++(ChatMessageModel *)setMessageWithFMResultSet:(FMResultSet *)set;
 
 -(BOOL)insertIntoTable:(NSString *)tableName forDB:(FMDatabase *)db;
 -(BOOL)deleteFromTable:(NSString *)tabelName forDB:(FMDatabase *)db;

@@ -96,6 +96,8 @@
     return [defaults objectForKey:@"userid"];
 }
 
+
+
 +(CGFloat)getHighOfString:(NSString *)str andSize:(CGSize)size andFont:(UIFont*)font
 {
     CGRect f = CGRectZero;

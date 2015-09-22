@@ -6,7 +6,15 @@
 //  Copyright (c) 2015年 apple. All rights reserved.
 //
 
-#define DOMAINNAME                  @"hsmdemacbook-pro.local"//@"appledemac-mini.local"//
+
+#define ISHSMSERVER                 1
+
+#if ISHSMSERVER
+#define DOMAINNAME                  @"hsmdemacbook-pro.local"
+#else
+#define DOMAINNAME                  @"appledemac-mini.local"
+#endif
+
 #define SCREENWIDTH                 [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGH                 [UIScreen mainScreen].bounds.size.height
 #define IOS7                        ([[UIDevice currentDevice].systemVersion doubleValue] > 7.0 ? 1 : 0)
@@ -16,7 +24,7 @@
 
 
 /*数据库debug*/
-#define DATABASE_DEBUG                       0
+#define DATABASE_DEBUG                       1
 #if DATABASE_DEBUG
 #define DebugLog_DATABASE(frmt, ...)         {NSLog((frmt),##__VA_ARGS__);}
 #else
@@ -61,31 +69,6 @@ enum MessageType{
 #define kRegisteSuccess     @"registeSuccess"
 #define kRegisteFail        @"registeFail"
 
-/* messages table stracuture
- @[@"id:integer primary key autoincrement",
- @"messageTo:text",              //toJID
- @"messageFrom:text",            //fromJID
- @"isme:bool",                   //是否是我
- @"isread:bool",                 //是否已读
- @"isgroup:bool",                //是否群
- @"time:date",                   //时间
- @"message:text",                //文本信息
- @"photo:text",                  //图片地址
- @"photoIndex:integer",          //图片偏移
- @"sound:text"                   //音频地址
- ];
- */
 
-
-/* friends table structure
- @[
- @"id:integer primary key autoincrement",
- @"jid:text",            //JID
- @"nickName:text",       //昵称
- @"gender:bool",         //性别
- @"subscription:bool",   //订阅状态
- @"headImg:text"         //头像
- ];
- */
 
 

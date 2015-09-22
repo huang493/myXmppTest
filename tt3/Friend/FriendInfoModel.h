@@ -25,7 +25,7 @@
  ];
  */
 
-@property (nonatomic,strong) NSString *jid;
+@property (nonatomic,strong) NSString *ID;
 @property (nonatomic,strong) NSString *nickName;
 @property (nonatomic,strong) NSString *group;      //所在的列表
 @property (nonatomic,strong) NSString *subscription;
@@ -35,14 +35,15 @@
 @property (nonatomic,strong) NSString *bday;
 @property (nonatomic,strong) NSString *adrStreet;
 @property (nonatomic,strong) NSString *tell;
+//@property (nonatomic,strong) UIImage  *headImg;
 
 +(FriendInfoModel *)loadDataFrom:(XMPPvCardTemp*)vCardTemp;
 +(FriendInfoModel *)setFriendInfoModelWith:(NSXMLElement *)item;
 +(FriendInfoModel *)loadFriendInfoFromLocal:(NSString *)jid;
++(NSMutableArray *)loadAllFrendsFromLocal;
 
 -(BOOL)insertIntoTable:(NSString *)tableName forDB:(FMDatabase *)db;
 -(BOOL)deleteFromTable:(NSString *)tabelName forDB:(FMDatabase *)db;
 -(BOOL)updateFromTable:(NSString *)tabelName forDB:(FMDatabase *)db newInfo:(FriendInfoModel *)newFriendInfo oldInfo:(FriendInfoModel *)oldFriendInfo;
-
 
 @end

@@ -23,6 +23,7 @@
 #import "PersionInfoModel.h"
 #import "XMPPRoomMemoryStorage.h"
 #import "RoomManager.h"
+#import "FriendListModel.h"
 
 @implementation XMPPClient
 @synthesize xmppStream;
@@ -226,8 +227,7 @@
     [noc postNotificationName:@"AuthenticateResult" object:nil];
     
     [self goOnline];
-    [self dicof];
-
+//    [self dicof];
     [self setupRoom];
 
 }
@@ -264,17 +264,16 @@
     if (![Tools checkVaild:msg withType:NSSTRING]) {
         return;
     }
-    NSLog(@"receive message:%@",message);
+    
     ChatMessageModel *model = [[ChatMessageModel alloc] init];
     [model setMessageWithXMPPMessage:message];
-    
+    NSLog(@"receive message:%@",model.message);
+
     DataBaseManager *manager = [DataBaseManager shareDataBaseManager];
     FMDatabase *db = [manager getDBWithPath:[NSString stringWithFormat:@"%@",[Tools getCurrentUserDoucmentPath]]];
     [model insertIntoTable:@"messages" forDB:db];
-    
     [manager closeDB:db];
     
-    //消息委托(这个后面讲)
     [_messageDelegate newMessageReceived:model];
     
 }
@@ -301,10 +300,10 @@
         //在线状态
         if ([presenceType isEqualToString:@"available"]) {
             
-            [_chatDelegate newBuddyOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, DOMAINNAME]];
+            [_chatDelegate newBuddyOnline:[presence from].bare];
             NSLog(@" Friend online presence");
         }else if ([presenceType isEqualToString:@"unavailable"]) {
-            [_chatDelegate buddyWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, DOMAINNAME]];
+            [_chatDelegate buddyWentOffline:[presence from].bare];
             NSLog(@" Friend offine presence:%@",presenceFromUser);
         }
     }
@@ -326,7 +325,9 @@
 
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message{
     
-}
+    ChatMessageModel *model = [[ChatMessageModel alloc] init];
+    [model setMessageWithXMPPMessage:message];
+    NSLog(@"send message:%@",model.message);}
 
 - (void)xmppStream:(XMPPStream *)sender didSendPresence:(XMPPPresence *)presence{
     
@@ -353,16 +354,16 @@
     DataBaseManager *manager = [DataBaseManager shareDataBaseManager];
     FMDatabase *db = [manager createDBWithPath:[NSString stringWithFormat:@"%@",[Tools getCurrentUserDoucmentPath]]];
     FriendInfoModel *model = [FriendInfoModel setFriendInfoModelWith:item];
-    FMResultSet *set = [manager queryDatasWhereConditionArray:@[@{@"jid":model.jid}] FromTable:@"friends" forDB:db withTpye:@"select"];
+    FMResultSet *set = [manager queryDatasWhereConditionArray:@[@{@"jid":model.ID}] FromTable:@"friends" forDB:db withTpye:@"select"];
     if (set.next) {
         FriendInfoModel *oldModel = [[FriendInfoModel alloc] init];
-        oldModel.jid = model.jid;
+        oldModel.ID = model.ID;
         [model updateFromTable:@"friends" forDB:db newInfo:model oldInfo:oldModel];
     }
     else{
         [model insertIntoTable:@"friends" forDB:db];
         [self setupVCard];
-        [_vCardTempModule fetchvCardTempForJID:[XMPPJID jidWithString:model.jid] ignoreStorage:YES];
+        [_vCardTempModule fetchvCardTempForJID:[XMPPJID jidWithString:model.ID] ignoreStorage:YES];
     }
 
 }
@@ -400,7 +401,7 @@
         FMResultSet *set = [manager queryDatasWhereConditionArray:@[@{@"jid":[jid bare]}] FromTable:@"friends" forDB:db withTpye:@"select"];
         if (set.next) {
             FriendInfoModel *oldModel = [[FriendInfoModel alloc] init];
-            oldModel.jid = [jid bare];
+            oldModel.ID = [jid bare];
             [model updateFromTable:@"friends" forDB:db newInfo:model oldInfo:oldModel];
         }
         else{
@@ -456,29 +457,43 @@
 -(void)setupRoom{
     
     RoomManager *roomManager = [RoomManager shareRoomManager];
-//    [roomManager createRoom:@"room" andJoinNickName:@"my1"];
-    //    [roomManager createRoom:@"text3" andJoinNickName:@"my2"];
-    
-        [roomManager getRoomInfoByRoomName:@"room"];
-    //    [roomManager destroyRoom:@"text"];
+    [roomManager createRoom:@"room999" andJoinNickName:@"my3"];
 }
 
 #pragma -mark XMPPRoomDelegate-------------------------------
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender{
-    NSLog(@"create room success :%@",sender);
+    NSLog(@"\\\\create room success :%@",sender);
     
-
     RoomManager *manager = [RoomManager shareRoomManager];
-    [manager getRoomInfoByRoomJID:sender.roomJID];
-    [manager defalutConfigForRoomJID:sender.roomJID];
+//    [manager defalutConfigForRoomJID:sender.roomJID];
+//    [manager configRoomWithRoomJID:sender.roomJID
+//               roomconfig_roomname:@"roomNickName"
+//               roomconfig_roomdesc:@"this is my test room"
+//       isRoomconfig_persistentroom:YES
+//           isRoomconfig_publicroom:YES
+//isRoomconfig_passwordprotectedroom:YES
+//             roomconfig_roomsecret:@"123456"
+//               roomconfig_maxusers:Maxusers10
+//                  roomconfig_whois:ModeratorsKnowWhois
+//          isRoomconfig_membersonly:YES
+//        isRoomconfig_moderatedroom:YES
+//                members_by_default:YES
+//        isRoomconfig_changesubject:YES
+//          isAllow_private_messages:YES
+//allow_private_messages_from_visitors:ModeratorsOnlyPrivateMessage
+//               isAllow_query_users:YES
+//         isRoomconfig_allowinvites:YES
+//   isRoomconfig_allowvisitorstatus:YES
+//isRoomconfig_allowvisitornickchange:YES
+//   isRoomconfig_allowvoicerequests:YES
+//roomconfig_voicerequestmininterval:2000
+//       roomconfig_captcha_whitelis:nil
+//                   isDefaultConfig:YES];
 
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm{
-//    RoomManager *manager = [RoomManager shareRoomManager];
-//    [manager getRoomInfoByRoomName:@"text2"];
-//    [manager invite:@"text3" intoRoom:@"text2"];
-    NSLog(@"------》》。。。。%s:%@",__FUNCTION__,sender);
+    NSLog(@"\\\\didFetchConfigurationForm:%@",sender);
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender willSendConfiguration:(XMPPIQ *)roomConfigForm{
@@ -487,21 +502,19 @@
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didConfigure:(XMPPIQ *)iqResult{
-    RoomManager *manager = [RoomManager shareRoomManager];
-    [manager getRoomInfoByRoomJID:sender.roomJID];
-    NSLog(@"room:%@ config success:%@",sender.roomJID,iqResult);
+    NSLog(@"\\\\room:%@ config success:%@",sender.roomJID,iqResult);
 }
 - (void)xmppRoom:(XMPPRoom *)sender didNotConfigure:(XMPPIQ *)iqResult{
-    NSLog(@"room:%@ config fail:%@",sender.roomJID,iqResult);
+    NSLog(@"\\\\room:%@ config fail:%@",sender.roomJID,iqResult);
 }
 
 - (void)xmppRoomDidJoin:(XMPPRoom *)sender{
 
-    NSLog(@"join room %@  %@",sender.myRoomJID,sender.roomJID);
+    NSLog(@"\\\\join room %@  %@",sender.myRoomJID,sender.roomJID);
 }
 
 - (void)xmppRoomDidLeave:(XMPPRoom *)sender{
-    NSLog(@"leave room %@ %@",sender.myRoomJID,sender.roomJID);
+    NSLog(@"\\\\leave room %@ %@",sender.myRoomJID,sender.roomJID);
 }
 
 - (void)xmppRoomDidDestroy:(XMPPRoom *)sender{

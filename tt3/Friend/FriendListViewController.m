@@ -1,14 +1,14 @@
 //
-//  KKViewController.m
+//  FriendListViewController.m
 //  tt3
 //
 //  Created by apple on 15/7/17.
 //  Copyright (c) 2015年 apple. All rights reserved.
 //
 
-#import "KKViewController.h"
+#import "FriendListViewController.h"
 #import "KKLoginController.h"
-#import "KKChatController.h"
+#import "ChatMainViewController.h"
 #import "KKChatDelegate.h"
 #import "AppDelegate.h"
 #import "AddFriendViewController.h"
@@ -16,8 +16,10 @@
 #import "hintView.h"
 #import "DataBaseManager.h"
 #import "RoomViewController.h"
+#import "FriendListModel.h"
+#import "FriendListCell.h"
 
-@interface KKViewController ()<UITableViewDataSource,UITableViewDelegate,KKChatDelegate>
+@interface FriendListViewController ()<UITableViewDataSource,UITableViewDelegate,KKChatDelegate>
 {
     
     NSMutableArray *sectionTitles;
@@ -26,10 +28,12 @@
     NSMutableArray *rooms;
     AppDelegate    *appDel;
     NSString       *currentUserID;
+    dispatch_queue_t refreshQueue;
+    FMDatabaseQueue *dbQueue;
 }
 @end
 
-@implementation KKViewController
+@implementation FriendListViewController
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
@@ -39,7 +43,10 @@
         onlineUsers   = [NSMutableArray array];
         offlineUsers  = [NSMutableArray array];
         rooms = [NSMutableArray array];
-        
+        refreshQueue = dispatch_queue_create("messageRefreshQueue", NULL);
+        NSString *path = [Tools getCurrentUserDoucmentPath];
+        path = [NSString stringWithFormat:@"%@/Message.db",path];
+        dbQueue      = [[FMDatabaseQueue alloc] initWithPath:path];
     }
     return self;
 }
@@ -56,7 +63,7 @@
     
     self.tView.delegate = self;
     self.tView.dataSource = self;
-    [self.tView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"userCell"];
+    [self.tView registerNib:[UINib nibWithNibName:@"FriendListCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     
     
     appDel = [self getDelegate];
@@ -77,22 +84,52 @@
 #endif
     
 }
--(void)loadFriendsFromLocal{
+-(void)refreshList{
     
-    DataBaseManager *dbManager = [DataBaseManager shareDataBaseManager];
-    FMDatabase *db = [dbManager getDBWithPath:[NSString stringWithFormat:@"%@",[Tools getCurrentUserDoucmentPath]]];
-    FMResultSet *set = [dbManager queryAllDatasFromTable:@"friends" forDB:db];
     [offlineUsers removeAllObjects];
-    while(set.next) {
-        [offlineUsers addObject:[set stringForColumn:@"jid"]];
-    }
-}
+    
+    dispatch_async(refreshQueue, ^{
+        NSMutableArray *infos = [FriendInfoModel loadAllFrendsFromLocal];
+        [infos enumerateObjectsUsingBlock:^(id  obj, NSUInteger idx, BOOL * stop) {
+            FriendInfoModel *model = obj;
+            FriendListModel *listModel = [[FriendListModel alloc] init];
+            NSString *sql1 = [NSString stringWithFormat:@"select * from messages where messageTo = '%@' and messageFrom = '%@' order by time desc",[Tools getCurrentUserId],model.ID];
+            NSString *sql2 = [NSString stringWithFormat:@"select * from messages where messageTo = '%@' and messageFrom = '%@' order by time desc",model.ID,[Tools getCurrentUserId]];
+            [dbQueue inDatabase:^(FMDatabase *db) {
+                FMResultSet *set1 = [db executeQuery:sql1];
+                ChatMessageModel *lastMessage1 = [ChatMessageModel setMessageWithFMResultSet:set1];
 
+                FMResultSet *set2 = [db executeQuery:sql2];
+                ChatMessageModel *lastMessage2 = [ChatMessageModel setMessageWithFMResultSet:set2];
+                [set1 close];
+                [set2 close];
+                
+                NSDate* date = [lastMessage1.time laterDate:lastMessage2.time];
+                if ([date isEqualToDate:lastMessage1.time]) {
+                    listModel.lastMessage = lastMessage1;
+                }
+                else{
+                    listModel.lastMessage = lastMessage2;
+                }
+                listModel.infoModel = model;
+                [offlineUsers addObject:listModel];
+            }];
+
+        }];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_tView  reloadData];
+ 
+        });
+    });
+
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [self loginSetup];
-
+    [self refreshList];
+    
     NSUserDefaults *defau = [NSUserDefaults standardUserDefaults];
     NSString *accountStr = [defau objectForKey:@"userid"];
     accountStr = [accountStr componentsSeparatedByString:@"@"].count>0 ?  [accountStr componentsSeparatedByString:@"@"][0]:@"";
@@ -126,8 +163,6 @@
             NSLog(@"------------>>>Account location login success");
         }
         
-        [self loadFriendsFromLocal];
-
     }
 }
 
@@ -140,7 +175,7 @@
 
 -(void)receiveSubscriptionRequestNoc:(NSNotification *) no {
     NSLog(@"noc:%@",no);
-    __weak KKViewController  *weakSelf = self;
+    __weak FriendListViewController  *weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary *dic             = no.object;
         XMPPRoster   *roster          = dic[@"XMPPRoster"];
@@ -216,7 +251,7 @@
 
 - (IBAction)Account:(id)sender {
     KKLoginController *loginVC = [[KKLoginController alloc] init];
-    __weak KKViewController *weakSelf = self;
+    __weak FriendListViewController *weakSelf = self;
     loginVC.newAccount = ^(NSString *userid,NSString *password,NSString*server){
         [onlineUsers removeAllObjects];
         [weakSelf.tView reloadData];
@@ -226,27 +261,27 @@
 
 #pragma -mark KKChatDelegate
 //在线好友
--(void)newBuddyOnline:(NSString *)buddyName{
+-(void)newBuddyOnline:(FriendListModel *)model{
     
-    if (![onlineUsers containsObject:buddyName]) {
-        [onlineUsers addObject:buddyName];
-        [offlineUsers removeObject:buddyName];
-        [self.tView reloadData];
-    }
+//    if (![onlineUsers containsObject:model]) {
+//        [onlineUsers addObject:model];
+//        [offlineUsers removeObject:model];
+//        [self.tView reloadData];
+//    }
 }
 
 //好友下线
--(void)buddyWentOffline:(NSString *)buddyName{
+-(void)buddyWentOffline:(FriendListModel *)model{
     
-    [onlineUsers removeObject:buddyName];
-    [offlineUsers addObject:buddyName];
-    [self.tView reloadData];
+//    [onlineUsers removeObject:model];
+//    [offlineUsers addObject:model];
+//    [self.tView reloadData];
     
 }
 
--(void)joinRoom:(NSString *)roomName{
-    [rooms addObject:roomName];
-    [self.tView reloadData];
+-(void)joinRoom:(FriendListModel *)model{
+//    [rooms addObject:model];
+//    [self.tView reloadData];
 }
 
 -(void)didDisconnect{
@@ -256,6 +291,9 @@
 
 
 #pragma mark UITableViewDelegate
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 80;
+}
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section
 {
     return 50;
@@ -291,35 +329,39 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"userCell"];
+    FriendListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    NSArray *datas = nil;
+    
     if (indexPath.section == 0) {
-        cell.textLabel.text = onlineUsers[indexPath.row];
-        cell.textLabel.textColor = [UIColor blackColor];
-
+        datas = onlineUsers;
     }
     else if(indexPath.section == 1){
-        cell.textLabel.text = offlineUsers[indexPath.row];
-        cell.textLabel.textColor = [UIColor grayColor];
+        datas = offlineUsers;
     }
     else{
-        cell.textLabel.text = rooms[indexPath.row];
-        cell.textLabel.textColor = [UIColor blackColor];
+        datas = rooms;
     }
-
+    
+    cell.model = datas[indexPath.row];
+    
     return cell;
 }
 
 #pragma mark UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    KKChatController *chatVC = [[KKChatController alloc] init];
-
+    ChatMainViewController *chatVC = [[ChatMainViewController alloc] init];
+    FriendListModel *model = nil;
     if(indexPath.section == 0){
-        chatVC.chatWithUser = onlineUsers[indexPath.row];
+        model = onlineUsers[indexPath.row];
     }
-    else{
-        chatVC.chatWithUser = offlineUsers[indexPath.row];
+    else if(indexPath.section == 1){
+        model = offlineUsers[indexPath.row];
     }
-
+    else {
+        model = rooms[indexPath.row];
+    }
+    
+    chatVC.chatWithUser = model.infoModel.ID;
     [self.navigationController pushViewController:chatVC animated:YES];
 
 }

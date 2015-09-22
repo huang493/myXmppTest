@@ -134,6 +134,9 @@ static DataBaseManager *manager = nil;
         return NO;
     }
     
+    if (![self isCanCreateDictionary:params]) {
+        return NO;
+    }
     
     NSMutableString *paramStr = [[NSMutableString alloc] initWithString:@"("];
     
@@ -151,6 +154,38 @@ static DataBaseManager *manager = nil;
     return result;
 }
 
+-(BOOL)isCanCreateDictionary:(NSArray *)arr{
+    
+    __block BOOL flag = YES;
+    [arr enumerateObjectsUsingBlock:^(id  obj, NSUInteger idx, BOOL * stop) {
+        if ([obj isKindOfClass:[NSString class]]) {
+            NSString *str = obj;
+            if ([str containsString:@":"]) {
+                
+                NSArray *arrTmp = [str componentsSeparatedByString:@":"];
+                if (arrTmp.count != 2 ) {
+                    flag = NO;
+                    *stop = YES;
+                };
+                
+            }
+            else{
+                flag = NO;
+                *stop = YES;
+            }
+        }
+        else{
+            flag = NO;
+            *stop = YES;
+        }
+        
+    }];
+    
+    if (!flag) {
+        DebugLog_DATABASE(@"params can't create Dictionary!");
+    }
+    return flag;
+}
 
 -(BOOL)insertDatasDictionary:(NSDictionary *)dataDic intoTable:(NSString *)tabelName forDB:(FMDatabase *)db{
     

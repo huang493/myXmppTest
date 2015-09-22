@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8C995EFE-B442-4F16-A731-04C8B3AB59AF</string>
+	<key>IDESourceControlProjectName</key>
+	<string>tt3</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F0669E0C578DBA10842490C3E1E8123ECB62D0C5</key>
+		<string>https://github.com/huang493/myXmppTest.git</string>
+		<key>a1d80723-e3aa-4402-b4be-16327ce7548e++2109</key>
+		<string>http://svnserver/svn/golo/ios/branches/goloMasterOversea/scene/Images/Home/emotion</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>tt3.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F0669E0C578DBA10842490C3E1E8123ECB62D0C5</key>
+		<string>../..</string>
+		<key>a1d80723-e3aa-4402-b4be-16327ce7548e++2109</key>
+		<string>../..tt3/images/emotion/</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>a1d80723-e3aa-4402-b4be-16327ce7548e++2109</key>
+		<string>http://svnserver/svn/golo</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/huang493/myXmppTest.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F0669E0C578DBA10842490C3E1E8123ECB62D0C5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>a1d80723-e3aa-4402-b4be-16327ce7548e++2109</string>
+			<key>IDESourceControlWCCName</key>
+			<string>emotion</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F0669E0C578DBA10842490C3E1E8123ECB62D0C5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>tt30727</string>
+		</dict>
+	</array>
+</dict>
+</plist>

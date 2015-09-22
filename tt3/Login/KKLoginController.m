@@ -140,7 +140,9 @@
                             @"message:text",                //文本信息
                             @"photo:text",                  //图片地址
                             @"photoIndex:integer",          //图片偏移
-                            @"sound:text"                   //音频地址
+                            @"sound:text",                  //音频地址
+                            @"bodyType:text",                     //消息内容类型
+                            @"type:text"                         //@"chat" or other
                             ];
         
         if (![dbManager createTable:@"messages" withParams:params toDataBase:db]) {
@@ -155,7 +157,7 @@
                    @"subscription:text",    //订阅状态
                    @"headImg:text",         //头像
                    @"listName:text",        //所在组的组名
-                   @"photo:text",           //头像
+//                   @"photo:text",           //头像,保存png图片，方便读取
                    @"bday:text",            //生日
                    @"adrStreet:text",       //地址
                    @"tell:text",             //电话

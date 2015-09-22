@@ -15,14 +15,14 @@
 
 @implementation XMPPSender
 
-+ (ChatMessageModel *)sendMessage:(NSString *)message andData:(NSData *)data withType:(enum MessageType)type to:(NSString *)to{
++ (ChatMessageModel *)sendMessage:(NSString *)message andData:(NSData *)data withBodyType:(enum MessageType)bodyType1 to:(NSString *)to{
     //本地输入框中的信息
     if (message.length > 0 || data.length>0) {
         
         NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
         
         NSString *bodyType = nil;
-        switch (type) {
+        switch (bodyType1) {
             case Text:
             {
                 [body setStringValue:message];

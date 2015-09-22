@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="27D-iz-mT1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="27D-iz-mT1">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -40,10 +40,10 @@
             </objects>
             <point key="canvasLocation" x="-2156" y="416"/>
         </scene>
-        <!--View Controller-->
+        <!--Friend List View Controller-->
         <scene sceneID="qDb-hv-qMv">
             <objects>
-                <viewController storyboardIdentifier="KKViewController" id="chw-0d-dEo" customClass="KKViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FriendListViewController" id="chw-0d-dEo" customClass="FriendListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pj8-e3-Gk6"/>
                         <viewControllerLayoutGuide type="bottom" id="rTU-rq-vz3"/>
@@ -62,7 +62,7 @@
                     <navigationItem key="navigationItem" id="DXz-CH-zsb">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="rB8-St-TzI">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ahs-cd-pIq">
-                                <rect key="frame" x="-23" y="-15" width="133" height="30"/>
+                                <rect key="frame" x="20" y="7" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Account">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -79,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RMf-NW-p2H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1850" y="-506"/>
+            <point key="canvasLocation" x="-1870" y="-492"/>
         </scene>
         <!--Login Controller-->
         <scene sceneID="8Qs-X4-kFv">

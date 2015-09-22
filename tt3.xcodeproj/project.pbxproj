@@ -88,10 +88,10 @@
 		18DF237D1B71AD1A002FA886 /* ChatCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF23761B71AD1A002FA886 /* ChatCellTableViewCell.m */; };
 		18DF237E1B71AD1A002FA886 /* ChatCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18DF23771B71AD1A002FA886 /* ChatCellTableViewCell.xib */; };
 		18DF237F1B71AD1A002FA886 /* ChatMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF23791B71AD1A002FA886 /* ChatMessageModel.m */; };
-		18DF23801B71AD1A002FA886 /* KKChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF237B1B71AD1A002FA886 /* KKChatController.m */; };
+		18DF23801B71AD1A002FA886 /* ChatMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF237B1B71AD1A002FA886 /* ChatMainViewController.m */; };
 		18DF239B1B71AD35002FA886 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF23961B71AD35002FA886 /* AddFriendViewController.m */; };
 		18DF239C1B71AD35002FA886 /* FriendInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF23981B71AD35002FA886 /* FriendInfoModel.m */; };
-		18DF239D1B71AD35002FA886 /* KKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF239A1B71AD35002FA886 /* KKViewController.m */; };
+		18DF239D1B71AD35002FA886 /* FriendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF239A1B71AD35002FA886 /* FriendListViewController.m */; };
 		18DF23A71B71AD42002FA886 /* hintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF23A51B71AD42002FA886 /* hintView.m */; };
 		18DF23A81B71AD42002FA886 /* hintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18DF23A61B71AD42002FA886 /* hintView.xib */; };
 		18DF24241B71AD48002FA886 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18DF23AA1B71AD48002FA886 /* 1.png */; };
@@ -219,6 +219,10 @@
 		18F2652E1BAA9B2C009B7BFF /* RoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F2652C1BAA9B2C009B7BFF /* RoomViewController.xib */; };
 		756246421B8812C5001104B8 /* ResgistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 756246401B8812C5001104B8 /* ResgistViewController.m */; };
 		756246431B8812C5001104B8 /* ResgistViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 756246411B8812C5001104B8 /* ResgistViewController.xib */; };
+		75DD50B71BAD38F30050EEB3 /* FriendListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DD50B51BAD38F30050EEB3 /* FriendListCell.m */; };
+		75DD50B81BAD38F30050EEB3 /* FriendListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75DD50B61BAD38F30050EEB3 /* FriendListCell.xib */; };
+		75DD50BB1BAD39470050EEB3 /* FriendListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DD50BA1BAD39470050EEB3 /* FriendListModel.m */; };
+		75DD50BE1BAD45170050EEB3 /* XMPPClientBLL.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DD50BD1BAD45170050EEB3 /* XMPPClientBLL.m */; };
 		75E957A61B97D92F00210989 /* ChartImageCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E957A41B97D92F00210989 /* ChartImageCellTableViewCell.m */; };
 		75E957A71B97D92F00210989 /* ChartImageCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75E957A51B97D92F00210989 /* ChartImageCellTableViewCell.xib */; };
 		75E97D501B5A308A0023B61B /* XMPPBandwidthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E97C521B5A308A0023B61B /* XMPPBandwidthMonitor.m */; };
@@ -490,14 +494,14 @@
 		18DF23771B71AD1A002FA886 /* ChatCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatCellTableViewCell.xib; sourceTree = "<group>"; };
 		18DF23781B71AD1A002FA886 /* ChatMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageModel.h; sourceTree = "<group>"; };
 		18DF23791B71AD1A002FA886 /* ChatMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageModel.m; sourceTree = "<group>"; };
-		18DF237A1B71AD1A002FA886 /* KKChatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKChatController.h; sourceTree = "<group>"; };
-		18DF237B1B71AD1A002FA886 /* KKChatController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKChatController.m; sourceTree = "<group>"; };
+		18DF237A1B71AD1A002FA886 /* ChatMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMainViewController.h; sourceTree = "<group>"; };
+		18DF237B1B71AD1A002FA886 /* ChatMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMainViewController.m; sourceTree = "<group>"; };
 		18DF23951B71AD35002FA886 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
 		18DF23961B71AD35002FA886 /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		18DF23971B71AD35002FA886 /* FriendInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendInfoModel.h; sourceTree = "<group>"; };
 		18DF23981B71AD35002FA886 /* FriendInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendInfoModel.m; sourceTree = "<group>"; };
-		18DF23991B71AD35002FA886 /* KKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKViewController.h; sourceTree = "<group>"; };
-		18DF239A1B71AD35002FA886 /* KKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKViewController.m; sourceTree = "<group>"; };
+		18DF23991B71AD35002FA886 /* FriendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListViewController.h; sourceTree = "<group>"; };
+		18DF239A1B71AD35002FA886 /* FriendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListViewController.m; sourceTree = "<group>"; };
 		18DF239F1B71AD3C002FA886 /* BaseMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseMacro.h; sourceTree = "<group>"; };
 		18DF23A01B71AD3C002FA886 /* KKChatDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKChatDelegate.h; sourceTree = "<group>"; };
 		18DF23A11B71AD3C002FA886 /* KKMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKMessageDelegate.h; sourceTree = "<group>"; };
@@ -637,6 +641,13 @@
 		7562463F1B8812C5001104B8 /* ResgistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResgistViewController.h; sourceTree = "<group>"; };
 		756246401B8812C5001104B8 /* ResgistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResgistViewController.m; sourceTree = "<group>"; };
 		756246411B8812C5001104B8 /* ResgistViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResgistViewController.xib; sourceTree = "<group>"; };
+		75DD50B41BAD38F30050EEB3 /* FriendListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListCell.h; sourceTree = "<group>"; };
+		75DD50B51BAD38F30050EEB3 /* FriendListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListCell.m; sourceTree = "<group>"; };
+		75DD50B61BAD38F30050EEB3 /* FriendListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendListCell.xib; sourceTree = "<group>"; };
+		75DD50B91BAD39470050EEB3 /* FriendListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListModel.h; sourceTree = "<group>"; };
+		75DD50BA1BAD39470050EEB3 /* FriendListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListModel.m; sourceTree = "<group>"; };
+		75DD50BC1BAD45170050EEB3 /* XMPPClientBLL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPClientBLL.h; sourceTree = "<group>"; };
+		75DD50BD1BAD45170050EEB3 /* XMPPClientBLL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPClientBLL.m; sourceTree = "<group>"; };
 		75E957A31B97D92F00210989 /* ChartImageCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartImageCellTableViewCell.h; sourceTree = "<group>"; };
 		75E957A41B97D92F00210989 /* ChartImageCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartImageCellTableViewCell.m; sourceTree = "<group>"; };
 		75E957A51B97D92F00210989 /* ChartImageCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChartImageCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -1315,6 +1326,8 @@
 			children = (
 				18BBC36A1B90085C0001D4A3 /* XMPPClient.h */,
 				18BBC36B1B90085C0001D4A3 /* XMPPClient.m */,
+				75DD50BC1BAD45170050EEB3 /* XMPPClientBLL.h */,
+				75DD50BD1BAD45170050EEB3 /* XMPPClientBLL.m */,
 				18BBC3771B903B290001D4A3 /* XMPPSender.h */,
 				18BBC3781B903B290001D4A3 /* XMPPSender.m */,
 				18BBC3741B903B120001D4A3 /* XMPPContext.h */,
@@ -1334,8 +1347,8 @@
 				18DF23771B71AD1A002FA886 /* ChatCellTableViewCell.xib */,
 				18DF23781B71AD1A002FA886 /* ChatMessageModel.h */,
 				18DF23791B71AD1A002FA886 /* ChatMessageModel.m */,
-				18DF237A1B71AD1A002FA886 /* KKChatController.h */,
-				18DF237B1B71AD1A002FA886 /* KKChatController.m */,
+				18DF237A1B71AD1A002FA886 /* ChatMainViewController.h */,
+				18DF237B1B71AD1A002FA886 /* ChatMainViewController.m */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -1345,10 +1358,15 @@
 			children = (
 				18DF23951B71AD35002FA886 /* AddFriendViewController.h */,
 				18DF23961B71AD35002FA886 /* AddFriendViewController.m */,
+				75DD50B91BAD39470050EEB3 /* FriendListModel.h */,
+				75DD50BA1BAD39470050EEB3 /* FriendListModel.m */,
+				75DD50B41BAD38F30050EEB3 /* FriendListCell.h */,
+				75DD50B51BAD38F30050EEB3 /* FriendListCell.m */,
+				75DD50B61BAD38F30050EEB3 /* FriendListCell.xib */,
 				18DF23971B71AD35002FA886 /* FriendInfoModel.h */,
 				18DF23981B71AD35002FA886 /* FriendInfoModel.m */,
-				18DF23991B71AD35002FA886 /* KKViewController.h */,
-				18DF239A1B71AD35002FA886 /* KKViewController.m */,
+				18DF23991B71AD35002FA886 /* FriendListViewController.h */,
+				18DF239A1B71AD35002FA886 /* FriendListViewController.m */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -2383,6 +2401,7 @@
 				18DF24831B71AD48002FA886 /* [@022]@2x.png in Resources */,
 				18DF24811B71AD48002FA886 /* [@020]@2x.png in Resources */,
 				18DF242C1B71AD48002FA886 /* [@pic067]@2x.png in Resources */,
+				75DD50B81BAD38F30050EEB3 /* FriendListCell.xib in Resources */,
 				18DF247D1B71AD48002FA886 /* [@016]@2x.png in Resources */,
 				18DF247C1B71AD48002FA886 /* [@015]@2x.png in Resources */,
 				18DF248B1B71AD48002FA886 /* [@030]@2x.png in Resources */,
@@ -2454,6 +2473,7 @@
 				75E97D801B5A308A0023B61B /* XMPPvCardTempLabel.m in Sources */,
 				75E97D851B5A308A0023B61B /* XMPPIQ+XEP_0060.m in Sources */,
 				1866ADE11B5897DA005BAD80 /* XMPPSRVResolver.m in Sources */,
+				75DD50B71BAD38F30050EEB3 /* FriendListCell.m in Sources */,
 				75E97D671B5A308A0023B61B /* XMPPPrivacy.m in Sources */,
 				75E97D9B1B5A308A0023B61B /* XMPPURI.m in Sources */,
 				75E97D581B5A308A0023B61B /* XMPPGroupCoreDataStorageObject.m in Sources */,
@@ -2516,7 +2536,7 @@
 				75E97D601B5A308A0023B61B /* XMPPRoster.m in Sources */,
 				75E97D621B5A308A0023B61B /* XMPPIQ+JabberRPC.m in Sources */,
 				188B79501B5E1E28009742FD /* FMDatabasePool.m in Sources */,
-				18DF239D1B71AD35002FA886 /* KKViewController.m in Sources */,
+				18DF239D1B71AD35002FA886 /* FriendListViewController.m in Sources */,
 				75E97D7D1B5A308A0023B61B /* XMPPvCardTempAdrTypes.m in Sources */,
 				75E97D8B1B5A308A0023B61B /* NSDate+XMPPDateTimeProfiles.m in Sources */,
 				75E97D641B5A308A0023B61B /* XMPPJabberRPCModule.m in Sources */,
@@ -2566,11 +2586,13 @@
 				1866ADD11B5897DA005BAD80 /* NSData+XMPP.m in Sources */,
 				18DF23A71B71AD42002FA886 /* hintView.m in Sources */,
 				1866ADDA1B5897DA005BAD80 /* XMPPParser.m in Sources */,
+				75DD50BE1BAD45170050EEB3 /* XMPPClientBLL.m in Sources */,
 				1866ADDE1B5897DA005BAD80 /* GCDMulticastDelegate.m in Sources */,
 				75E97D9C1B5A308A0023B61B /* XMPPvCardAvatarModule.m in Sources */,
 				75E97D831B5A308A0023B61B /* NSXMLElement+XEP_0059.m in Sources */,
 				1866ADEC1B5897DA005BAD80 /* DDMultiFormatter.m in Sources */,
 				75E97D8C1B5A308A0023B61B /* XMPPDateTimeProfiles.m in Sources */,
+				75DD50BB1BAD39470050EEB3 /* FriendListModel.m in Sources */,
 				18DF237F1B71AD1A002FA886 /* ChatMessageModel.m in Sources */,
 				75E97DA01B5A308A0023B61B /* XMPPMessageDeliveryReceipts.m in Sources */,
 				1866ADCF1B5897DA005BAD80 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
@@ -2580,7 +2602,7 @@
 				75E97D6C1B5A308A0023B61B /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				75E97DA91B5A308A0023B61B /* NSXMLElement+XEP_0203.m in Sources */,
 				75E97D811B5A308A0023B61B /* XMPPvCardTempModule.m in Sources */,
-				18DF23801B71AD1A002FA886 /* KKChatController.m in Sources */,
+				18DF23801B71AD1A002FA886 /* ChatMainViewController.m in Sources */,
 				188B79511B5E1E28009742FD /* FMDatabaseQueue.m in Sources */,
 				75E97D701B5A308A0023B61B /* XMPPRoomMemoryStorage.m in Sources */,
 				1866ADC91B5897DA005BAD80 /* XMPPAnonymousAuthentication.m in Sources */,

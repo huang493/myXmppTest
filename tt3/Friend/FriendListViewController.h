@@ -1,5 +1,5 @@
 //
-//  KKViewController.h
+//  FriendListViewController.h
 //  tt3
 //
 //  Created by apple on 15/7/17.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface KKViewController : BaseViewController
+@interface FriendListViewController : BaseViewController
 @property (weak, nonatomic) IBOutlet UITableView *tView;
 - (IBAction)Account:(id)sender;
 

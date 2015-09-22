@@ -1,5 +1,5 @@
 //
-//  KKChatController.h
+//  ChatMainViewController.h
 //  tt3
 //
 //  Created by apple on 15/7/17.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KKChatController : UIViewController
+@interface ChatMainViewController : UIViewController
 
 @property (strong, nonatomic) UITableView *tView;
 @property (strong, nonatomic) UITextField *messageTextField;
